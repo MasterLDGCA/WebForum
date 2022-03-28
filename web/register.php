@@ -1,6 +1,6 @@
 <?php
-define( 'PAGE', 'Home' );
-define( 'PAGE_TITLE', 'Home');
+define( 'PAGE', 'Register' );
+define( 'PAGE_TITLE', 'Register');
 
 require 'inc/header.inc.php';
 ?>

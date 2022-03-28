@@ -1,6 +1,6 @@
 <?php
 
-require './inc/postgresql.inc.php';
+require 'inc/postgresql.inc.php';
 
 $result = pg_query($db_connection, "SELECT * FROM \"Users\"");
 

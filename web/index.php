@@ -9,6 +9,7 @@ require 'inc/postgresql.inc.php';
 <div class="title">
   <h1>Welcome to WebForum</h1>
 </div>
+<<<<<<< HEAD
 
 <?php
   $stmt = 'select p.title , p."content", u.first_name , u.last_name, p.created_at, p.id  from "Posts" p
@@ -42,3 +43,5 @@ require 'inc/postgresql.inc.php';
 
   }
 ?>
+=======
+>>>>>>> b865dba1db2283f1f3fccffcff200426a98f6aa7

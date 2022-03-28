@@ -11,14 +11,12 @@ require 'inc/postgresql.inc.php';
 </div>
 
 <?php
-  $stmt = "SELECT * FROM \"Users\"";
+  $stmt = 'select p.title , p."content", u.first_name , u.last_name, p.created_at  from "Posts" p  
+            left join "Users" u ON p.user_id = u.id
+            where p.visible = true and p.approved = true';
   $result = pg_query($db_connection, $stmt);
 
   while ($row = pg_fetch_row($result)) {
     print_r($row);
   }
 ?>
-
-<script>
-    console.log(<?= json_encode($result); ?>);
-</script>

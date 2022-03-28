@@ -16,22 +16,21 @@ require 'inc/postgresql.inc.php';
             where p.visible = true and p.approved = true';
   $result = pg_query($db_connection, $stmt);
 
-  while ($row = pg_fetch_row($result)) {
-?>
-<div class="post_title">
-  <?echo $row[0]?>
-</div>
-<div class="post_body">
-  <?echo $row[1]?>
-</div>
-<div class="post_author">
-  <?echo $row[2]." "$row[3]?>
-</div>
-<div class="post_date">
-  <?echo $row[4]?>
-</div>
-<hr />
+  while ($row = pg_fetch_row($result)) { ?>
+
+    <div class="post_title">
+      <?php echo $row[0]?>
+    </div>
+    <div class="post_body">
+      <?php echo $row[1]?>
+    </div>
+    <div class="post_author">
+      <?php echo $row[2]." "$row[3]?>
+    </div>
+    <div class="post_date">
+      <?php echo $row[4]?>
+    </div>
+    <hr />
 
 <?php
-  }
-?>
+  } ?>

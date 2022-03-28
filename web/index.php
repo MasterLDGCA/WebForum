@@ -17,6 +17,7 @@ require 'inc/postgresql.inc.php';
   $result = pg_query($db_connection, $stmt);
 
   while ($row = pg_fetch_row($result)) {
+    print_r($row);
     echo "<div class=\"post_node\">";
     echo "<div class=\"post_title\">".$row[0]."</div>";
     echo "<div class=\"post_content\">".$row[1]."</div>";

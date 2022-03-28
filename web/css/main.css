@@ -50,4 +50,11 @@
 
 .post_content {
   margin-bottom: 5px;
+  padding: 0px 10px;
+  background: lightblue;
+}
+
+.post_footer {
+  display: flex;
+  justify-content: space-between;
 }

@@ -31,3 +31,23 @@
 .form-group {
   margin-bottom: 5px;
 }
+
+/* index pag */
+
+.post_node {
+  border: 1px solid blue;
+  border-radius: 10px;
+  padding: 10px;
+  width: 80%;
+  margin: auto;
+}
+
+.post_title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.post_content {
+  margin-bottom: 5px;
+}

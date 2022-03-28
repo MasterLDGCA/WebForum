@@ -20,8 +20,10 @@ require 'inc/postgresql.inc.php';
     echo "<div class=\"post_node\">";
     echo "<div class=\"post_title\">".$row[0]."</div>";
     echo "<div class=\"post_content\">".$row[1]."</div>";
+    echo "<div>";
     echo "<div class=\"post_author\">".$row[2]." ".$row[3]."</div>";
     echo "<div class=\"post_date\">".$row[4]."</div>";
+    echo "</div>";
     echo "</div>";
     echo "<hr>";
   }

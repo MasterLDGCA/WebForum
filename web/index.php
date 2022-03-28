@@ -34,9 +34,12 @@ require 'inc/postgresql.inc.php';
     $result = pg_query($db_connection, $stmt);
 
     while ($row = pg_fetch_row($result)) {
-      print_r($row);
+      echo "<div class=\"comment_node\">";
+      echo "<div class=\"comment_author\">".$row[0]." ".$row[1]."</div>";
+      echo "<div class=\"comment_content\">".$row[2]."</div>";
+      echo "<div class=\"comment_date\">".$row[3]."</div>";
+      echo "</div>";
     }
-
     echo "</div>";
     echo "<hr>";
   }

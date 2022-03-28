@@ -29,7 +29,7 @@ require 'inc/postgresql.inc.php';
     // Retrieve comments
     $stmt = 'select u.first_name , u.last_name , c."comment" , c.created_at from "Comments" c
               left join "Users" u on c.user_id = u.id
-              where c.visible = true and c.approved = true and c.post_id = '.$row[5];
+              where c.visible = true and c.approved = true and c.post_id = 1'';
 
     $result = pg_query($db_connection, $stmt);
 

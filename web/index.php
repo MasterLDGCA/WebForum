@@ -25,18 +25,17 @@ require 'inc/postgresql.inc.php';
     echo "<div class=\"post_author\">".$row[2]." ".$row[3]."</div>";
     echo "<div class=\"post_date\">".$row[4]."</div>";
     echo "</div>";
-    ;
 
     // Retrieve comments
-    $stmt = 'select u.first_name , u.last_name , c."comment" , c.created_at from "Comments" c
-              left join "Users" u on c.user_id = u.id
-              where c.visible = true and c.approved = true and c.post_id = 1';
-
-    $result = pg_query($db_connection, $stmt);
-
-    while ($row = pg_fetch_row($result)) {
-      print_r($row);
-    }
+    // $stmt = 'select u.first_name , u.last_name , c."comment" , c.created_at from "Comments" c
+    //           left join "Users" u on c.user_id = u.id
+    //           where c.visible = true and c.approved = true and c.post_id = 1';
+    //
+    // $result = pg_query($db_connection, $stmt);
+    //
+    // while ($row = pg_fetch_row($result)) {
+    //   print_r($row);
+    // }
 
     echo "</div>";
     echo "<hr>"

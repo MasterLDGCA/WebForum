@@ -38,7 +38,7 @@ require 'inc/postgresql.inc.php';
     }
 
     echo "</div>";
-    echo "<hr>"
+    echo "<hr>";
 
   }
 ?>

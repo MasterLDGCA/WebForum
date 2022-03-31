@@ -3,13 +3,20 @@ define( 'PAGE', 'Home' );
 define( 'PAGE_TITLE', 'Home');
 
 require 'inc/header.inc.php';
-require 'inc/postgresql.inc.php';
+// requireLogin();
 ?>
 
 <div class="title">
   <h1>Welcome to WebForum</h1>
 </div>
 <div class="post_box">
+  <?php if ($loggedIn) {
+    echo "<div class=\"post_node\">";
+    echo "<div class=\"post_title\">Create a new post</div>";
+    echo "<div class=\"post_content\"><br><br><br></div>";
+    echo "</div>";
+  }
+  ?>
   <?php
     $stmt = 'select p.title , p."content", u.first_name , u.last_name, p.created_at, p.id  from "Posts" p
               left join "Users" u ON p.user_id = u.id
@@ -40,7 +47,10 @@ require 'inc/postgresql.inc.php';
         echo "</div>";
       }
       echo "</div>";
-      echo "<hr>";
     }
   ?>
 </div>
+
+<?php
+require 'inc/footer.inc.php'
+?>

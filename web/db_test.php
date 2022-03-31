@@ -2,10 +2,10 @@
 
 require 'inc/postgresql.inc.php';
 
-$result = pg_query($db_connection, "SELECT * FROM \"Users\"");
-
-while ($row = pg_fetch_row($result)) {
-  print_r($row);
-}
+$username = 'admin@webforum.com';
+$stmt = "select pass_hash from \"Users\" u where email = '".$username."'";
+$check = pg_query($db_connection, $stmt);
+$result = pg_fetch_row($check);
+print_r($result);
 
 ?>

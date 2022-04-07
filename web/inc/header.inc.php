@@ -19,14 +19,14 @@ require 'inc/session.inc.php';
         <ul class="nav-list">
           <li class="nav-item"><a href="/">Home</a></li>
           <?php
-          if ($loggedIn) echo "<li class=\"nav-item\"><a href=\"/profile.php\">Profile</a></li>";
-          else echo "<li class=\"nav-item\"><a href=\"/register.php\">Register</a></li>";
-          ?>
-          <?php
-          if ($loggedIn) echo "<li class=\"nav-item\"><a href=\"/logout.php\">Logout</a></li>";
-          else echo "<li class=\"nav-item\"><a href=\"/login.php\">Login</a></li>";
-          ?>
+          if ($isAdmin) echo "<li class=\"nav-item\"><a href=\"/admin.php\">Administration</a></li>\n";
 
+          if ($loggedIn) echo "<li class=\"nav-item\"><a href=\"/profile.php\">Profile</a></li>\n";
+          else echo "<li class=\"nav-item\"><a href=\"/register.php\">Register</a></li>\n";
+
+          if ($loggedIn) echo "<li class=\"nav-item\"><a href=\"/logout.php\">Logout</a></li>\n";
+          else echo "<li class=\"nav-item\"><a href=\"/login.php\">Login</a></li>\n";
+          ?>
         </ul>
       </div>
     </div>

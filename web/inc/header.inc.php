@@ -19,7 +19,7 @@ require 'inc/session.inc.php';
         <ul class="nav-list">
           <li class="nav-item"><a href="/">Home</a></li>
           <?php
-          if ($loggedIn) echo "<li class=\"nav-item\"><a href=\"#\">Profile</a></li>";
+          if ($loggedIn) echo "<li class=\"nav-item\"><a href=\"/profile.php\">Profile</a></li>";
           else echo "<li class=\"nav-item\"><a href=\"/register.php\">Register</a></li>";
           ?>
           <?php

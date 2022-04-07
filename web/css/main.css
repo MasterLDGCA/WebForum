@@ -8,6 +8,10 @@
   border-bottom: 1px solid blue;
 }
 
+.content {
+
+}
+
 .nav-list {
   display: flex;
   list-style-type: none;
@@ -92,4 +96,9 @@
   display: flex;
   justify-content: space-between;
   margin: 10px;
+}
+
+.profile_box {
+  width: 500px;
+  margin: auto;
 }

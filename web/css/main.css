@@ -40,7 +40,10 @@
   margin-bottom: 5px;
 }
 
-/* index pag */
+/* index page */
+.post_row {
+  margin-bottom: 60px;
+}
 
 .post_node {
   border: 1px solid blue;

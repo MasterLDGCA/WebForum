@@ -25,7 +25,7 @@ if( isset( $_SESSION['username'] ) ){ // Already logged in
     $_SESSION['username'] = $result[0]." ".$result[1];
     $_SESSION['email'] = $username;
     $_SESSION['is_admin'] = false;
-    
+
     if ($result[3]==='t') $_SESSION['is_admin'] = true;
   }
 }
@@ -38,6 +38,7 @@ function requireLogin(){
       <h1>Login to your account</h1>
       <p>admin@webforum.com : pass</p>
       <p>test1@webforum.com : test</p>
+      <p>test2@webforum.com : test</p>
       <form method="post" action="<?=$_SERVER['REQUEST_URI'];?>">
         <div class="form-group">
           <input type="username" id="username" name="name" placeholder="Username" required autofocus>

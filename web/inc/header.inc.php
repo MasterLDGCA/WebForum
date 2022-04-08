@@ -21,6 +21,8 @@ require 'inc/session.inc.php';
           <?php
           if ($isAdmin) echo "<li class=\"nav-item\"><a href=\"/admin.php\">Administration</a></li>\n";
 
+          if ($loggedIn) echo "<li class=\"nav-item\"><a href=\"/formpost.php\">Create Post</a></li>\n";
+
           if ($loggedIn) echo "<li class=\"nav-item\"><a href=\"/profile.php\">Profile</a></li>\n";
           else echo "<li class=\"nav-item\"><a href=\"/register.php\">Register</a></li>\n";
 

@@ -5,50 +5,25 @@ created: 14/03/2022
 last modified: 14/03/2022
 description: Assignment 1 Content Management Systems (CMS)
 -->
+
 <?php
-define( 'PAGE', 'Discussiom' );
+define( 'PAGE', 'Discussion' );
 define( 'PAGE_TITLE', 'Discussion');
 
 require 'inc/header.inc.php';
-
-if ($loggedIn) {
-  header( 'location: /formpost.php' );
-  exit();
-}
-
+requireLogin();
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="description" content="Content Management Systems (CMS) enhancements" />
-  <meta name="keywords" content="HTML5, tags" />
-  <meta name="author" content="An assignment"  />
-  <link rel="stylesheet" type="text/css" href="styles/style.css"/>
-  <title>Post form</title>
-  
-</head>
-
-<body>
-   <header>
-     <h1>Discussion Form</h1>
-     
-   </header>
-   
-   <form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php">
+<form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php">
 	<label for="issue">Post your discussion here:</label></br>
   <input style="height:200px; width: 600px; font-size:10pt;" type="text" size="500" id="issue" name="issue" placeholder="Write your answer of enquiry here..." required = "required"></br>
-	
+
 	<input type= "submit" value="Submit"/>
 	<input type= "reset" value="Reset Form"/>
 
+</form>
 
-	</form>
-</body>
-
-</html>
 
 <!--This week leaders and all time leaders
 
@@ -62,3 +37,7 @@ for new members.
 
 ex: vanilla forums
 --->
+
+<?php
+require 'inc/footer.inc.php'
+?>

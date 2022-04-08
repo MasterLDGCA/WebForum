@@ -5,7 +5,19 @@ created: 14/03/2022
 last modified: 14/03/2022
 description: Assignment 1 Content Management Systems (CMS)
 -->
+<?php
+define( 'PAGE', 'Discussiom' );
+define( 'PAGE_TITLE', 'Discussion');
 
+require 'inc/header.inc.php';
+
+if ($loggedIn) {
+  header( 'location: /formpost.php' );
+  exit();
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">

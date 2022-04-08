@@ -26,9 +26,6 @@ $result = pg_fetch_row($check);
       <label for=""><?php echo $result[2]?></label>
     </div>
     <div class="form-group">
-      <label for=""><?php echo ($result[3]==='t') ? "Is" : "Not" ?> an administrator</label>
-    </div>
-    <div class="form-group">
       <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
     </div>
     <button type="submit" class="btn btn-secondary">Submit</button>

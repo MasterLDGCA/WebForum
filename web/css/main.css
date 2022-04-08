@@ -12,6 +12,10 @@
 
 }
 
+.error_msg {
+  color: red;
+}
+
 .menu {
   margin-right: 20px;
 }

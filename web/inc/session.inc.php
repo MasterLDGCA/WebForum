@@ -33,20 +33,22 @@ function requireLogin(){
     global $loggedIn;
     if( !$loggedIn ){
     ?>
-    <div class="form-box">
-      <h1>Login to your account</h1>
-      <p>admin@webforum.com : pass</p>
-      <p>test1@webforum.com : test</p>
-      <p>test2@webforum.com : test</p>
-      <form method="post" action="<?=$_SERVER['REQUEST_URI'];?>">
-        <div class="form-group">
-          <input type="username" id="username" name="name" placeholder="Username" required autofocus>
-        </div>
-        <div class="form-group">
-          <input type="password" id="inputPassword" name="password" placeholder="Password" required>
-        </div>
-        <button type="submit" class="btn btn-secondary">Submit</button>
-      </form>
+    <div class="content">
+      <div class="form-box">
+        <h1>Login to your account</h1>
+        <p>admin@webforum.com : pass</p>
+        <p>test1@webforum.com : test</p>
+        <p>test2@webforum.com : test</p>
+        <form method="post" action="<?=$_SERVER['REQUEST_URI'];?>">
+          <div class="form-group">
+            <input type="username" id="username" name="name" placeholder="Username" required autofocus>
+          </div>
+          <div class="form-group">
+            <input type="password" id="inputPassword" name="password" placeholder="Password" required>
+          </div>
+          <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>

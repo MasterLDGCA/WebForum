@@ -10,8 +10,9 @@ if ( !$isAdmin ) {
   exit();
 }
 ?>
-
-<h1>Administrative Controls</h1>
+<div class="content">
+  <h1>Administrative Controls</h1>
+</div>
 
 <?php
 require 'inc/footer.inc.php'

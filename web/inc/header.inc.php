@@ -9,12 +9,21 @@ require 'inc/session.inc.php';
       <meta name="author" content="Charith Akalanka">
       <title><?php if (defined("PAGE_TITLE")) { echo PAGE_TITLE . " | "; } ?>WebForum</title>
       <link rel="stylesheet" href="css/main.css">
+      <link rel="stylesheet" href="css/bootstrap.css" />
+  		<link rel="stylesheet" href="css/custom.css" />
+  		<script src="js/bootstrap.js"></script>
+  		<script src="js/p5.js"></script>
+      <script src="js/sketch.js"></script>
   </head>
   <body>
     <div class="header">
-      <div class="title">
-        <h2>WebForum</h2>
+      <div class="menu_title">
+         <img src="images/logo.png" alt="EduGame">
       </div>
+      <div>
+  			<!-- LETS PUT CANVAS HERE -->
+  			<p id="cancan"></p>
+  		</div>
       <div class="menu">
         <ul class="nav-list">
           <li class="nav-item"><a href="/">Home</a></li>

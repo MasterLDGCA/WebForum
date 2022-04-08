@@ -14,16 +14,16 @@ require 'inc/header.inc.php';
 requireLogin();
 
 ?>
+<div class="content">
+	<form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php">
+		<label for="issue">Post your discussion here:</label></br>
+	  <input style="height:200px; width: 600px; font-size:10pt;" type="text" size="500" id="issue" name="issue" placeholder="Write your answer of enquiry here..." required = "required"></br>
 
-<form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php">
-	<label for="issue">Post your discussion here:</label></br>
-  <input style="height:200px; width: 600px; font-size:10pt;" type="text" size="500" id="issue" name="issue" placeholder="Write your answer of enquiry here..." required = "required"></br>
+		<input type= "submit" value="Submit"/>
+		<input type= "reset" value="Reset Form"/>
 
-	<input type= "submit" value="Submit"/>
-	<input type= "reset" value="Reset Form"/>
-
-</form>
-
+	</form>
+</div>
 
 <!--This week leaders and all time leaders
 

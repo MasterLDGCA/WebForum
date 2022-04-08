@@ -5,7 +5,7 @@ define( 'PAGE_TITLE', 'Home');
 require 'inc/header.inc.php';
 // requireLogin();
 ?>
-<div class="post_row">
+<div class="content">
   <div class="title">
     <h1>Welcome to WebForum</h1>
   </div>

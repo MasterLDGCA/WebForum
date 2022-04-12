@@ -11,33 +11,38 @@ define( 'PAGE', 'Discussion' );
 define( 'PAGE_TITLE', 'Discussion');
 
 require 'inc/header.inc.php';
+require 'inc/functions.inc.php';
 requireLogin();
 
+if ($loggedIn) {
+  header( 'location: /profile.php' );
+  exit();
+}
+
+$errors = null;
+$errors = new_user_validation();
+
+if (!empty($_POST["title"]) && ($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
+  // Add user to the database
+  insert_user($db_connection,$_POST["id"],$_POST["title"],$_POST["content"]);
+}
+
 ?>
-<div class="content">
-	<form method="post" action="https://mercury.swin.edu.au/it000000/formtest.php">
+<div class="content">    
+	<?php
+    	  if ($errors) {
+       		 foreach($errors as $error) {
+        	 	 echo "<div class=\"error_msg\">*".$error."</div>\n";
+      	 	 }
+    	  }
+   	 ?>
+	<form method="post" action="form.php">
 		<label for="issue">Post your discussion here:</label></br>
-	  <input style="height:200px; width: 600px; font-size:10pt;" type="text" size="500" id="issue" name="issue" placeholder="Write your answer of enquiry here..." required = "required"></br>
+	  <input type="text" class="title" name="title" placeholder="Discussion Topic" value="<?=$_POST["title"];?>">
+	  <input style="height:200px; width: 600px; font-size:10pt;" type="text" size="500" id="content" name="content" placeholder="Write your answer of enquiry here..." value="<?=$_POST["content"];?>" required = "required"></br>
 
 		<input type= "submit" value="Submit"/>
 		<input type= "reset" value="Reset Form"/>
 
 	</form>
 </div>
-
-<!--This week leaders and all time leaders
-
-If you’d like to see a lot of user activity you might be tempted to give one point per post.
-high quality of post by giving posts for positive reactions, favourite
-
-a new member joins and sees that the top scores are totally
-unattainable, they’re unlikely to want to try. Weekly or
-monthly totals tend to provide more realistic goal states
-for new members.
-
-ex: vanilla forums
---->
-
-<?php
-require 'inc/footer.inc.php'
-?>

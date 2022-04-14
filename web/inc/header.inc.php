@@ -12,8 +12,8 @@ require 'inc/session.inc.php';
       <link rel="stylesheet" href="css/bootstrap.css" />
   		<link rel="stylesheet" href="css/custom.css" />
   		<script src="js/bootstrap.js"></script>
-  		<script src="js/p5.js"></script>
-      <script src="js/sketch.js"></script>
+  		<!-- <script src="js/p5.js"></script> -->
+      <!-- <script src="js/sketch.js"></script> -->
   </head>
   <body>
     <div class="header">
@@ -22,10 +22,12 @@ require 'inc/session.inc.php';
       </div>
       <div>
   			<!-- LETS PUT CANVAS HERE -->
-  			<p id="cancan"></p>
+  			<!-- <p id="cancan"></p> -->
   		</div>
       <div class="menu">
         <ul class="nav-list">
+          <li class="nav-item"><a href="/style1.html">Style1</a></li>
+          <li class="nav-item"><a href="/style1.html">Style2</a></li>
           <li class="nav-item"><a href="/">Home</a></li>
           <?php
           if ($isAdmin) echo "<li class=\"nav-item\"><a href=\"/admin.php\">Administration</a></li>\n";

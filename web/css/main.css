@@ -74,6 +74,10 @@
   margin-bottom: 10px;
 }
 
+.post_node .clicked {
+  background: blue;
+}
+
 .post_title_node {
   display: flex;
 }

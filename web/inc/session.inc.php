@@ -3,26 +3,29 @@ if( session_status() == PHP_SESSION_NONE ) session_start();
 
 $loggedIn = false;
 $isAdmin = false;
+$userID = null;
 
 if( isset( $_SESSION['username'] ) ){ // Already logged in
     $loggedIn = true;
     $isAdmin = $_SESSION['is_admin'];
     $username = $_SESSION['username'];
+    $userID = $_SESSION['user_id'];
 
 } elseif( isset($_POST['name']) && isset($_POST['password']) ){ // New login attempt
   // Check DB
   $username = pg_escape_string($_POST['name']);
   $password = pg_escape_string($_POST['password']);
 
-  $stmt = "select first_name, last_name, pass_hash, is_admin from \"Users\" u where email = '".$username."'";
+  $stmt = "select first_name, last_name, pass_hash, is_admin, id from \"Users\" u where email = '".$username."'";
   $check = pg_query($db_connection, $stmt);
   $result = pg_fetch_row($check);
-  print_r($result);
+  // print_r($result);
 
   if(password_verify($password, $result[2])) {
     $loggedIn = true;
     $_SESSION['username'] = $result[0]." ".$result[1];
     $_SESSION['email'] = $username;
+    $_SESSION['user_id'] = $result[4];
     $_SESSION['is_admin'] = false;
 
     if ($result[3]==='t') $_SESSION['is_admin'] = true;

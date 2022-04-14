@@ -8,10 +8,6 @@
   border-bottom: 1px solid blue;
 }
 
-.content {
-
-}
-
 .error_msg {
   color: red;
 }
@@ -23,11 +19,17 @@
 .nav-list {
   display: flex;
   list-style-type: none;
+  margin-top: 50px;
 }
 
 .nav-item {
   margin-left: 20px;
   text-align: center;
+  padding: 10px;
+}
+
+.nav-item a {
+  color: darkblue !important;
 }
 
 .form-box {
@@ -49,6 +51,20 @@
   margin-bottom: 60px;
 }
 
+.view {
+  display: flex;
+  margin: 0px 20px;
+}
+
+.post_box {
+  width: 75%;
+}
+
+.leader_box {
+  border: 2px solid blue;
+  width: 25%;
+}
+
 .post_node {
   border: 1px solid blue;
   border-radius: 10px;
@@ -58,10 +74,27 @@
   margin-bottom: 10px;
 }
 
+.post_title_node {
+  display: flex;
+}
+
 .post_title {
   font-weight: bold;
   font-size: 20px;
   margin-bottom: 5px;
+}
+
+.post_tags {
+  display: flex;
+  margin: 0px 10px;
+}
+
+.tag {
+  color: white;
+  background: gray;
+  border-radius: 5px;
+  padding: 5px 5px;
+  margin: 2px 2px;
 }
 
 .post_content {
@@ -72,13 +105,19 @@
 
 .post_footer {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  margin: 10px 20px;
+}
+
+.post_author {
+  margin: 0px 10px;
+  font-weight: bold;
 }
 
 .comment_node {
   display: flex;
   justify-content: space-between;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   border-radius: 10px;
   padding: 10px;
   margin: 10px;

@@ -14,11 +14,6 @@ require 'inc/header.inc.php';
 require 'inc/functions.inc.php';
 requireLogin();
 
-if ($loggedIn) {
-  header( 'location: /profile.php' );
-  exit();
-}
-
 $errors = null;
 $errors = new_user_validation();
 
@@ -28,7 +23,7 @@ if (!empty($_POST["title"]) && ($_POST["title"]) && !empty($_POST["content"]) &&
 }
 
 ?>
-<div class="content">    
+<div class="content">
 	<?php
     	  if ($errors) {
        		 foreach($errors as $error) {

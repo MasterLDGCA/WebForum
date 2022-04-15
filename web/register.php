@@ -47,7 +47,14 @@ if (!empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["email"]
       </div>
       <button type="submit" class="btn btn-secondary">Register</button>
     </form>
+    <p></p>
+    <p>Or</p>
+    <form method="get" action="/login.php">
+      <button type="submit" class="btn btn-secondary">Login</button>
+    </form>
   </div>
 </div>
-</body>
-</html>
+
+<?php
+require 'inc/footer.inc.php'
+?>

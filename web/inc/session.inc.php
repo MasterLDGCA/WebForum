@@ -4,6 +4,7 @@ if( session_status() == PHP_SESSION_NONE ) session_start();
 $loggedIn = false;
 $isAdmin = false;
 $userID = null;
+$errors = null;
 
 if( isset( $_SESSION['username'] ) ){ // Already logged in
     $loggedIn = true;
@@ -29,32 +30,39 @@ if( isset( $_SESSION['username'] ) ){ // Already logged in
     $_SESSION['is_admin'] = false;
 
     if ($result[3]==='t') $_SESSION['is_admin'] = true;
+  } else {
+    $errors = "<div class=\"error_msg\">* Email address or Password is wrong. Please try again.</div>\n";
   }
 }
 
 function requireLogin(){
     global $loggedIn;
+    global $errors;
     if( !$loggedIn ){
     ?>
     <div class="content">
+      <?php if ($errors) echo $errors; ?>
       <div class="form-box">
         <h1>Login to your account</h1>
-        <p>admin@webforum.com : pass</p>
-        <p>test1@webforum.com : test</p>
-        <p>test2@webforum.com : test</p>
         <form method="post" action="<?=$_SERVER['REQUEST_URI'];?>">
           <div class="form-group">
-            <input type="username" id="username" name="name" placeholder="Username" required autofocus>
+            <input type="username" id="username" name="name" placeholder="Email" required autofocus>
           </div>
           <div class="form-group">
             <input type="password" id="inputPassword" name="password" placeholder="Password" required>
           </div>
-          <button type="submit" class="btn btn-secondary">Submit</button>
+          <button type="submit" class="btn btn-secondary">Login</button>
+        </form>
+        <p></p>
+        <p>Or</p>
+        <form method="get" action="/register.php">
+          <button type="submit" class="btn btn-secondary">Register</button>
         </form>
       </div>
     </div>
-  </body>
-</html>
+    <?php
+    require 'inc/footer.inc.php'
+    ?>
 
 <?php
     exit();

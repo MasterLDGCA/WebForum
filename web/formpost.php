@@ -15,11 +15,11 @@ require 'inc/functions.inc.php';
 requireLogin();
 
 $errors = null;
-$errors = new_user_validation();
+$errors = create_post();
 
 if (!empty($_POST["title"]) && ($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
   // Add user to the database
-  insert_user($db_connection,$_POST["id"],$_POST["title"],$_POST["content"]);
+  create_post($db_connection,$userID,$_POST["title"],$_POST["content"]);
 }
 
 ?>

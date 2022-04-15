@@ -83,4 +83,8 @@ function comment_like_clicked( $db_connection, $comment_id, $user_id ) {
 
 }
 
+function create_post() {
+  return;
+}
+
 ?>

@@ -29,4 +29,58 @@ function new_user_validation() {
   else return 0;
 }
 
+function post_like_clicked( $db_connection, $post_id, $user_id ) {
+  // echo "Post ID:".$post_id." User ID:".$user_id;
+
+  $stmt = 'select *
+            from "PostLikes" pl
+            where pl.post_id='.$post_id.' and pl.user_id='.$user_id;
+
+  $already_liked = pg_query($db_connection, $stmt);
+  $already_liked = pg_num_rows($already_liked);
+
+  if ($already_liked) {
+    // Delete the previous like
+    $stmt = 'delete from "PostLikes" pl
+              where pl.post_id='.$post_id.' and pl.user_id='.$user_id;
+    // echo $stmt;
+    $delete_like = pg_query($db_connection, $stmt);
+
+  } else {
+    // Create a new like
+    $stmt = 'insert into "PostLikes" (post_id, user_id) values (\''.$post_id.'\',\''.$user_id.'\')';
+    // echo $stmt;
+    $create_like = pg_query($db_connection, $stmt);
+
+  }
+
+}
+
+function comment_like_clicked( $db_connection, $comment_id, $user_id ) {
+  // echo "Comment ID:".$comment_id." User ID:".$user_id;
+
+  $stmt = 'select *
+            from "CommentLikes" cl
+            where cl.comment_id='.$comment_id.' and cl.user_id='.$user_id;
+
+  $already_liked = pg_query($db_connection, $stmt);
+  $already_liked = pg_num_rows($already_liked);
+
+  if ($already_liked) {
+    // Delete the previous like
+    $stmt = 'delete from "CommentLikes" cl
+              where cl.post_id='.$comment_id.' and cl.user_id='.$user_id;
+    // echo $stmt;
+    $delete_like = pg_query($db_connection, $stmt);
+
+  } else {
+    // Create new like
+    $stmt = 'insert into "CommentLikes" (comment_id, user_id) values (\''.$comment_id.'\',\''.$user_id.'\')';
+    // echo $stmt;
+    $create_like = pg_query($db_connection, $stmt);
+
+  }
+
+}
+
 ?>

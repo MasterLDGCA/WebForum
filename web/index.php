@@ -3,12 +3,20 @@ define( 'PAGE', 'Home' );
 define( 'PAGE_TITLE', 'Home');
 
 require 'inc/header.inc.php';
+require 'inc/functions.inc.php';
 // requireLogin();
+
+if (!empty($_POST["post_like"])) {
+  requireLogin();
+  post_like_clicked($db_connection, $_POST["post_like"], $userID);
+}
+
+if (!empty($_POST["comment_like"])) {
+  requireLogin();
+  comment_like_clicked($db_connection, $_POST["comment_like"], $userID);
+}
 ?>
 <div class="content">
-  <div class="title">
-    <h1>Welcome to WebForum</h1>
-  </div>
   <div class="view">
     <div class="post_box">
       <?php
@@ -18,7 +26,8 @@ require 'inc/header.inc.php';
                   left join (select pl.post_id , count(pl.user_id) as likes
                   			from "PostLikes" pl
                   			group by pl.post_id ) as likes on likes.post_id = p.id
-                  where p.visible = true and p.approved = true';
+                  where p.visible = true and p.approved = true
+                  order by p.created_at desc';
         $posts = pg_query($db_connection, $stmt);
 
         while ($post_row = pg_fetch_row($posts)) {
@@ -52,15 +61,17 @@ require 'inc/header.inc.php';
           echo "</div>";
           echo "<div class=\"post_content\">".$post_row[1];
           echo "<div class=\"forum_button\">
-                  <button type=\"button\" class=\"post_like_button";
+                  <form method=\"POST\" action=\"index.php\">
+                    <input type=\"hidden\" name=\"post_like\" value=\"".$post_row[5]."\">
+                    <button type=\"submit\" class=\"post_like_button";
           echo ($post_liked) ? " clicked" : "";
           echo "\"><span class=\"glyphicon glyphicon-thumbs-up\"></span> ";
           echo ($post_row[6]) ? $post_row[6] : "Like";
-          echo "</button></div>";
+          echo "</button></form></div>";
           echo "</div>"; // post_content
           echo "<div class=\"post_footer\">";
           echo "<div class=\"post_author\">".$post_row[2]." ".$post_row[3]."</div>";
-          echo "<div class=\"post_date\">(".$post_row[4].")</div>";
+          echo "<div class=\"post_date\">(".date('Y-m-d H:i:s',strtotime($post_row[4])).")</div>";
           echo "</div>";
 
           // Retrieve comments
@@ -70,7 +81,7 @@ require 'inc/header.inc.php';
                     left join (select cl.comment_id , count(cl.user_id) as likes
                     			from "CommentLikes" cl
                     			group by cl.comment_id ) as likes on likes.comment_id = c.id
-                    where c.visible = true and c.approved = true and c.post_id = '.$post_row[5];
+                    where c.visible = true and c.approved = true and c.post_id = '.$post_row[5].'order by c.created_at';
 
           $comments = pg_query($db_connection, $stmt);
 
@@ -90,13 +101,15 @@ require 'inc/header.inc.php';
             echo "<div class=\"comment_node\">";
             echo "<div class=\"comment_author\">".$comment_row[0]." ".$comment_row[1]."</div>";
             echo "<div class=\"comment_content\">".$comment_row[2]."</div>";
-            echo "<div class=\"comment_date\">".$comment_row[3]."</div>";
+            echo "<div class=\"comment_date\">".date('Y-m-d H:i:s',strtotime($comment_row[3]))."</div>";
             echo "<div class=\"forum_button\">
-                     <button type=\"button\" class=\"comment_like_button";
+                    <form method=\"POST\" action=\"index.php\">
+                      <input type=\"hidden\" name=\"comment_like\" value=\"".$comment_row[5]."\">
+                      <button type=\"submit\" class=\"comment_like_button";
             echo ($comment_liked) ? " clicked" : "";
             echo "\"><span class=\"glyphicon glyphicon-thumbs-up\"></span> ";
             echo ($comment_row[4]) ? $comment_row[4] : "Like";
-            echo "</button></div>";
+            echo "</button></form></div>";
             echo "</div>";
           }
           echo "</div>";

@@ -112,6 +112,16 @@ if (!empty($_POST["comment_like"])) {
             echo "</button></form></div>";
             echo "</div>";
           }
+          echo "<div class=\"comment_node\">";
+          echo "<div class=\"comment_author\">";
+          echo ($_SESSION['username']) ? $_SESSION['username'] : "<a href=\"/login.php\">Login/Register</a>";
+          echo "</div>";
+          echo "<div class=\"comment_content\"><input name=\"comment_content\" value=\"Add your commnent here\"></div>";
+          echo "<div class=\"comment_date\">".date('Y-m-d H:i:s')."</div>";
+          echo "<div class=\"forum_button\">
+                  <button class=\"comment_like_button\">Comment</button>";
+          echo "</div>";
+          echo "</div>";
           echo "</div>";
         }
       ?>

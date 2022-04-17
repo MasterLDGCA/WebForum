@@ -147,22 +147,20 @@ display: flex;
 
 .comment_node {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   background-color: lightgrey;
   border-radius: 10px;
-  padding: 10px;
+  padding: 3px 10px;
   margin: 10px;
 
 }
 
 .comment_author {
   font-weight: bold;
-  margin-right: 10px;
 }
 
 .comment_content {
-  max-width: 50%;
-  margin-right: 10px;
+
 }
 
 .footer_box {
@@ -177,14 +175,13 @@ display: flex;
 .footer_content {
   display: flex;
   justify-content: space-between;
-  margin: 10px;
 }
 
 .comment_like_button{
   background-color:rgba(240,240,240,255);
   border: 0.1em 0.1em  rgba(35,39,42,255);
   color: rgba(35,39,42,255);
-  padding: 0.5em 0.5em;
+  padding: 3px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

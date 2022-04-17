@@ -127,48 +127,94 @@ if (!empty($_POST["comment_like"])) {
       ?>
     </div>
     <div class="leader_box">
-      <div class="leader_box_title">
-        <img src="images/trophy.png" alt="trophy">
-        <h2>Leaderboard</h2>
+      <div class="leaderboard_top">
+        <div class="leader_box_title">
+          <img src="images/trophy.png" alt="trophy">
+          <h2>Leaderboard - This week</h2>
+        </div>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Post Likes</th>
+            <th>Comment Likes</th>
+            <th>Score</th>
+          </tr>
+          <?php
+            $stmt = ' select concat(u2.first_name,\' \',u2.last_name) , post_likes.author, post_likes.post_likes , comment_likes.comment_likes
+                      from (select u.id as author , sum(post_likes.likes) as post_likes
+                      		from "Users" u
+                      		left join "Posts" p on p.user_id = u.id
+                      		left join (select pl.post_id, count(*) as likes from "PostLikes" pl where pl.created_at >\''.date('Y-m-d', strtotime('-1 week')).'\' group by pl.post_id) as post_likes on post_likes.post_id = p.id
+                      		group by author) as post_likes
+                      left join (select u.id as author , sum(comment_likes.likes) as comment_likes
+                      		from "Users" u
+                      		left join "Comments" c on c.user_id = u.id
+                      		left join (select cl.comment_id, count(*) as likes from "CommentLikes" cl where cl.created_at >\''.date('Y-m-d', strtotime('-1 week')).'\' group by cl.comment_id) as comment_likes on comment_likes.comment_id = c.id
+                      		group by author) as comment_likes
+                      on post_likes.author = comment_likes.author
+                      left join "Users" u2 on u2.id = post_likes.author';
+
+            $alltime_leaders = pg_query($db_connection, $stmt);
+
+            while ($alltime_leader_row = pg_fetch_row($alltime_leaders)) {
+              // print_r($alltime_leader_row);
+              $final_score = $alltime_leader_row[2] + $alltime_leader_row[3];
+              if (!$final_score) continue;
+              echo "<tr>";
+              echo "<td>".$alltime_leader_row[0]."</td>";
+              echo "<td>".$alltime_leader_row[2]."</td>";
+              echo "<td>".$alltime_leader_row[3]."</td>";
+              echo "<td>".$final_score."</td>";
+              echo "</tr>";
+            }
+
+          ?>
+        </table>
       </div>
-      <table>
-        <tr>
-          <th>User</th>
-          <th>Post Likes</th>
-          <th>Comment Likes</th>
-          <th>Score</th>
-        </tr>
-        <?php
-          $stmt = ' select concat(u2.first_name,\' \',u2.last_name) , post_likes.author, post_likes.post_likes , comment_likes.comment_likes
-                    from (select u.id as author , sum(post_likes.likes) as post_likes
-                    		from "Users" u
-                    		left join "Posts" p on p.user_id = u.id
-                    		left join (select pl.post_id, count(*) as likes from "PostLikes" pl group by pl.post_id) as post_likes on post_likes.post_id = p.id
-                    		group by author) as post_likes
-                    left join (select u.id as author , sum(comment_likes.likes) as comment_likes
-                    		from "Users" u
-                    		left join "Comments" c on c.user_id = u.id
-                    		left join (select cl.comment_id, count(*) as likes from "CommentLikes" cl group by cl.comment_id) as comment_likes on comment_likes.comment_id = c.id
-                    		group by author) as comment_likes
-                    on post_likes.author = comment_likes.author
-                    left join "Users" u2 on u2.id = post_likes.author';
+      <div class="leaderboard_bottom">
+        <div class="leader_box_title">
+          <img src="images/trophy.png" alt="trophy">
+          <h2>Leaderboard - Lifetime</h2>
+        </div>
+        <table>
+          <tr>
+            <th>User</th>
+            <th>Post Likes</th>
+            <th>Comment Likes</th>
+            <th>Score</th>
+          </tr>
+          <?php
+            $stmt = ' select concat(u2.first_name,\' \',u2.last_name) , post_likes.author, post_likes.post_likes , comment_likes.comment_likes
+                      from (select u.id as author , sum(post_likes.likes) as post_likes
+                      		from "Users" u
+                      		left join "Posts" p on p.user_id = u.id
+                      		left join (select pl.post_id, count(*) as likes from "PostLikes" pl group by pl.post_id) as post_likes on post_likes.post_id = p.id
+                      		group by author) as post_likes
+                      left join (select u.id as author , sum(comment_likes.likes) as comment_likes
+                      		from "Users" u
+                      		left join "Comments" c on c.user_id = u.id
+                      		left join (select cl.comment_id, count(*) as likes from "CommentLikes" cl group by cl.comment_id) as comment_likes on comment_likes.comment_id = c.id
+                      		group by author) as comment_likes
+                      on post_likes.author = comment_likes.author
+                      left join "Users" u2 on u2.id = post_likes.author';
 
-          $alltime_leaders = pg_query($db_connection, $stmt);
+            $alltime_leaders = pg_query($db_connection, $stmt);
 
-          while ($alltime_leader_row = pg_fetch_row($alltime_leaders)) {
-            // print_r($alltime_leader_row);
-            $final_score = $alltime_leader_row[2] + $alltime_leader_row[3];
-            if (!$final_score) continue;
-            echo "<tr>";
-            echo "<td>".$alltime_leader_row[0]."</td>";
-            echo "<td>".$alltime_leader_row[2]."</td>";
-            echo "<td>".$alltime_leader_row[3]."</td>";
-            echo "<td>".$final_score."</td>";
-            echo "</tr>";
-          }
+            while ($alltime_leader_row = pg_fetch_row($alltime_leaders)) {
+              // print_r($alltime_leader_row);
+              $final_score = $alltime_leader_row[2] + $alltime_leader_row[3];
+              if (!$final_score) continue;
+              echo "<tr>";
+              echo "<td>".$alltime_leader_row[0]."</td>";
+              echo "<td>".$alltime_leader_row[2]."</td>";
+              echo "<td>".$alltime_leader_row[3]."</td>";
+              echo "<td>".$final_score."</td>";
+              echo "</tr>";
+            }
 
-        ?>
-      </table>
+          ?>
+        </table>
+      </div>
     </div>
   </div>
 </div>

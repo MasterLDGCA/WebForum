@@ -46,10 +46,10 @@ function requireLogin(){
         <h1>Login to your account</h1>
         <form method="post" action="<?=$_SERVER['REQUEST_URI'];?>">
           <div class="form-group">
-            <input type="username" id="username" name="name" placeholder="Email" required autofocus>
+            <input type="username" id="username" name="name" placeholder="Email" value="<?php echo ($_POST['name']) ? $_POST['name'] : "\" autofocus" ?>" required>
           </div>
           <div class="form-group">
-            <input type="password" id="inputPassword" name="password" placeholder="Password" required>
+            <input type="password" id="inputPassword" name="password" placeholder="Password" required <?php echo ($_POST['name']) ? autofocus : "" ?>>
           </div>
           <button type="submit" class="btn btn-secondary">Login</button>
         </form>

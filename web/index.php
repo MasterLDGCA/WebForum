@@ -33,7 +33,7 @@ if (!empty($_POST["comment_like"])) {
         while ($post_row = pg_fetch_row($posts)) {
           echo "<div class=\"post_node\">";
           echo "<div class=\"post_title_node\">";
-          echo "<div class=\"post_title\">".$post_row[0]."</div>";
+          echo "<img class=\"post_img\" src=\"images/die.png\" alt=\"\"><div class=\"post_title\">".$post_row[0]."</div>";
           echo "<div class=\"post_tags\">";
           // Retrieve tags
           $stmt = 'select s.title from "PostSubject" ps
@@ -116,7 +116,7 @@ if (!empty($_POST["comment_like"])) {
           echo "<div class=\"comment_author\">";
           echo ($_SESSION['username']) ? $_SESSION['username'] : "<a href=\"/login.php\">Login/Register</a>";
           echo "</div>";
-          echo "<div class=\"comment_content\"><input name=\"comment_content\" value=\"Add your commnent here\"></div>";
+          echo "<div class=\"comment_content\"><input name=\"comment_content\" placeholder=\"Add your commnent here\"></div>";
           echo "<div class=\"comment_date\">".date('Y-m-d H:i:s')."</div>";
           echo "<div class=\"forum_button\">
                   <button class=\"comment_like_button\">Comment</button>";

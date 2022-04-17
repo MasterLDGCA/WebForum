@@ -61,9 +61,18 @@
   width: 75%;
 }
 
+.leader_box_title {
+  display: flex;
+  justify-content: space-around;
+}
+
 .leader_box {
   /* border: 2px solid blue; */
   width: 25%;
+}
+
+.leader_box img {
+  height: 50px;
 }
 
 .post_node {

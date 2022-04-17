@@ -127,8 +127,10 @@ if (!empty($_POST["comment_like"])) {
       ?>
     </div>
     <div class="leader_box">
-      <img src="images/trophy.png" alt="trophy">
-      <h2>Leaderboard</h2>
+      <div class="leader_box_title">
+        <img src="images/trophy.png" alt="trophy">
+        <h2>Leaderboard</h2>
+      </div>
       <table>
         <tr>
           <th>User</th>

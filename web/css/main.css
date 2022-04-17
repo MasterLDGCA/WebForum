@@ -13,13 +13,13 @@
 }
 
 .menu {
+  margin: auto;
   margin-right: 20px;
 }
 
 .nav-list {
   display: flex;
   list-style-type: none;
-  margin-top: 50px;
 }
 
 .nav-item {
@@ -64,6 +64,7 @@
 .leader_box_title {
   display: flex;
   justify-content: space-around;
+  height: 100px;
 }
 
 .leader_box {
@@ -72,7 +73,11 @@
 }
 
 .leader_box img {
-  height: 50px;
+  height: inherit;
+}
+
+.leaderboard_top {
+  margin-bottom: 20px;
 }
 
 .post_node {

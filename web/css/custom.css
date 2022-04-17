@@ -176,7 +176,7 @@ display: flex;
   justify-content: space-between;
 }
 
-.comment_like_button{
+.like_button{
   background-color:rgba(240,240,240,255);
   border: 0.1em 0.1em  rgba(35,39,42,255);
   color: rgba(35,39,42,255);
@@ -188,33 +188,11 @@ display: flex;
   border-radius: 1em;
 }
 
-.comment_like_button {
+.like_button {
   transition-duration: 0.6s;
 }
 
-.comment_like_button:hover {
-  background-color: rgba(255,192,0,255);
-  color: rgba(114,137,218,255);
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-}
-
-.post_like_button{
-  background-color:rgba(240,240,240,255);
-  border: 0.1em 0.1em  rgba(35,39,42,255);
-  color: rgba(35,39,42,255);
-  padding: 0.5em 0.5em;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1em;
-  border-radius: 1em;
-}
-
-.post_like_button {
-  transition-duration: 0.6s;
-}
-
-.post_like_button:hover {
+.like_button:hover {
   background-color: rgba(255,192,0,255);
   color: rgba(114,137,218,255);
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);

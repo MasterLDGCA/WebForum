@@ -63,7 +63,7 @@ if (!empty($_POST["comment_like"])) {
           echo "<div class=\"forum_button\">
                   <form method=\"POST\" action=\"index.php\">
                     <input type=\"hidden\" name=\"post_like\" value=\"".$post_row[5]."\">
-                    <button type=\"submit\" class=\"post_like_button";
+                    <button type=\"submit\" class=\"like_button";
           echo ($post_liked) ? " clicked" : "";
           echo "\"><span class=\"glyphicon glyphicon-thumbs-up\"></span> ";
           echo ($post_row[6]) ? $post_row[6] : "Like";
@@ -105,7 +105,7 @@ if (!empty($_POST["comment_like"])) {
             echo "<div class=\"forum_button\">
                     <form method=\"POST\" action=\"index.php\">
                       <input type=\"hidden\" name=\"comment_like\" value=\"".$comment_row[5]."\">
-                      <button type=\"submit\" class=\"comment_like_button";
+                      <button type=\"submit\" class=\"like_button";
             echo ($comment_liked) ? " clicked" : "";
             echo "\"><span class=\"glyphicon glyphicon-thumbs-up\"></span> ";
             echo ($comment_row[4]) ? $comment_row[4] : "Like";
@@ -119,7 +119,7 @@ if (!empty($_POST["comment_like"])) {
           echo "<div class=\"comment_content\"><input name=\"comment_content\" placeholder=\"Add your commnent here\"></div>";
           echo "<div class=\"comment_date\">".date('Y-m-d H:i:s')."</div>";
           echo "<div class=\"forum_button\">
-                  <button class=\"comment_like_button\">Comment</button>";
+                  <button class=\"like_button\">Comment</button>";
           echo "</div>";
           echo "</div>";
           echo "</div>";

@@ -171,6 +171,8 @@
 
 .comment_node .forum_button {
   width: 15%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .footer_box {

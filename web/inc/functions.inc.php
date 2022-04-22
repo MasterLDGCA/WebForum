@@ -8,7 +8,7 @@ function insert_user($db_connection, $fname, $lname, $email, $password) {
   $result = pg_query($db_connection, $query );
   if (!$result) echo "<div class=\"error_msg\">Account creation failed. Please contact the administrators</div>";
   else {
-    $_SESSION['username'] = $_POST["fname"]." ".$_POST["fname"];
+    $_SESSION['username'] = $_POST["fname"]." ".$_POST["lname"];
     header( 'location: /profile.php' );
     exit();
   }

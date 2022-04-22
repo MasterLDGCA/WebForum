@@ -5,9 +5,15 @@ define( 'PAGE_TITLE', 'Home');
 require 'inc/header.inc.php';
 requireLogin();
 
-$stmt = "select first_name, last_name, email, is_admin from \"Users\" u where email = '".$_SESSION['email']."'";
+$stmt = "select first_name, last_name, email, is_admin, id from \"Users\" u where email = '".$_SESSION['email']."'";
 $check = pg_query($db_connection, $stmt);
 $result = pg_fetch_row($check);
+
+if ($result) {
+  $_SESSION['user_id'] = $result[4];
+  $_SESSION['is_admin'] = false;
+  if ($result[3]==='t') $_SESSION['is_admin'] = true;
+}
 ?>
 
 <div class="content">

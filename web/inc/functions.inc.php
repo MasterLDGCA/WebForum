@@ -9,6 +9,7 @@ function insert_user($db_connection, $fname, $lname, $email, $password) {
   if (!$result) echo "<div class=\"error_msg\">Account creation failed. Please contact the administrators</div>";
   else {
     $_SESSION['username'] = $_POST["fname"]." ".$_POST["lname"];
+    $_SESSION['email'] = $_POST["email"];
     header( 'location: /profile.php' );
     exit();
   }

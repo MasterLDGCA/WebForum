@@ -16,18 +16,25 @@ if( isset( $_SESSION['username'] ) ){ // Already logged in
   $username = pg_escape_string($_POST['name']);
   $password = pg_escape_string($_POST['password']);
 
-  $stmt = "select first_name, last_name, pass_hash, is_admin, id from \"Users\" u where email = '".$username."'";
+  $stmt = "select first_name, last_name, pass_hash, is_admin, id, approved from \"Users\" u where email = '".$username."'";
   $check = pg_query($db_connection, $stmt);
   $result = pg_fetch_row($check);
   // print_r($result);
 
   if(password_verify($password, $result[2])) {
-    $loggedIn = true;
-    $_SESSION['username'] = $result[0]." ".$result[1];
-    $_SESSION['email'] = $username;
-    $_SESSION['user_id'] = $result[4];
-    $_SESSION['is_admin'] = false;
-    if ($result[3]==='t') $_SESSION['is_admin'] = true;
+    if ($result[5] === 't' || $result[3] === 't') {
+      // Is an approved user or an admin
+      $loggedIn = true;
+      $_SESSION['username'] = $result[0]." ".$result[1];
+      $_SESSION['email'] = $username;
+      $_SESSION['user_id'] = $result[4];
+      $_SESSION['is_admin'] = false;
+      if ($result[3]==='t') $_SESSION['is_admin'] = true;
+
+    } else {
+      $errors = "<div class=\"error_msg\">* Your account is still being reviewd. Please contact the administrator for furthur assistance.</div>\n";
+    }
+
   } else {
     $errors = "<div class=\"error_msg\">* Email address or Password is wrong. Please try again.</div>\n";
   }

@@ -84,6 +84,30 @@ function comment_like_clicked( $db_connection, $comment_id, $user_id ) {
 
 }
 
+function make_admin($db_connection, $user_id) {
+  // Grants a user Admin previleges
+  $stmt = 'update "Users" set "is_admin" = \'t\' where id =\''.$user_id.'\'';
+  $make_admin = pg_query($db_connection, $stmt);
+}
+
+function revoke_admin($db_connection, $user_id) {
+  // Revoke a user's Admin previleges
+  $stmt = 'update "Users" set "is_admin" = \'f\' where id =\''.$user_id.'\'';
+  $make_admin = pg_query($db_connection, $stmt);
+}
+
+function revoke_approval($db_connection, $user_id) {
+  // Revoke a user's Admin previleges
+  $stmt = 'update "Users" set "approved" = \'f\' where id =\''.$user_id.'\'';
+  $make_admin = pg_query($db_connection, $stmt);
+}
+
+function grant_approval($db_connection, $user_id) {
+  // Revoke a user's Admin previleges
+  $stmt = 'update "Users" set "approved" = \'t\' where id =\''.$user_id.'\'';
+  $make_admin = pg_query($db_connection, $stmt);
+}
+
 function create_post() {
   return;
 }

@@ -16,11 +16,11 @@ $result = pg_fetch_row($check);
     <form method="post" action="/profile.php">
       <div class="form-group">
         <label for="">First Name : </label>
-        <input name="fname" class="form-control" placeholder="<?php echo $result[0]?>" >
+        <input name="fname" class="form-control" value="<?php echo $result[0]?>" >
       </div>
       <div class="form-group">
         <label for="">Last Name : </label>
-        <input name="lname" class="form-control" placeholder="<?php echo $result[1]?>" >
+        <input name="lname" class="form-control" value="<?php echo $result[1]?>" >
       </div>
       <div class="form-group">
         <label for="">Email address : </label>

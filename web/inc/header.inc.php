@@ -26,8 +26,6 @@ require 'inc/session.inc.php';
   		</div>
       <div class="menu">
         <ul class="nav-list">
-          <li class="nav-item"><a href="/style1.html">Style1</a></li>
-          <li class="nav-item"><a href="/style1.html">Style2</a></li>
           <li class="nav-item"><a href="/">Home</a></li>
           <?php
           if ($isAdmin) echo "<li class=\"nav-item\"><a href=\"/admin.php\">Administration</a></li>\n";

@@ -18,7 +18,7 @@ require 'inc/session.inc.php';
   <body>
     <div class="header">
       <div class="menu_title">
-         <img src="images/logo.png" alt="EduGame">
+        <a href="/"><img src="images/logo.png" alt="EduGame"></a>
       </div>
       <div>
   			<!-- LETS PUT CANVAS HERE -->

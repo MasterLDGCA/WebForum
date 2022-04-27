@@ -8,6 +8,7 @@ require 'inc/session.inc.php';
       <meta charset="utf-8">
       <meta name="author" content="Charith Akalanka">
       <title><?php if (defined("PAGE_TITLE")) { echo PAGE_TITLE . " | "; } ?>WebForum</title>
+      <link rel="shortcut icon" href="images/trophy.png" />
       <link rel="stylesheet" href="css/main.css">
       <link rel="stylesheet" href="css/bootstrap.css" />
   		<link rel="stylesheet" href="css/custom.css" />

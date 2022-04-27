@@ -17,7 +17,7 @@ requireLogin();
 $errors = null;
 $errors = create_post();
 
-if (!empty($_POST["title"]) && ($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
+if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
   // Add user to the database
   create_post($db_connection,$userID,$_POST["title"],$_POST["content"]);
 }
@@ -36,7 +36,7 @@ if (!empty($_POST["title"]) && ($_POST["title"]) && !empty($_POST["content"]) &&
 	  <input type="text" class="title" name="title" placeholder="Discussion Topic" value="<?=$_POST["title"];?>">
 	  <input style="height:200px; width: 600px; font-size:10pt;" type="text" size="500" id="content" name="content" placeholder="Write your answer of enquiry here..." value="<?=$_POST["content"];?>" required = "required"></br>
 
-		<input type= "submit" value="Submit"/>
+		<button type= "submit">Submit</button>
 		<input type= "reset" value="Reset Form"/>
 
 	</form>

@@ -84,32 +84,19 @@ function comment_like_clicked( $db_connection, $comment_id, $user_id ) {
 
 }
 
-function make_admin($db_connection, $user_id) {
-  // Grants a user Admin previleges
-  $stmt = 'update "Users" set "is_admin" = \'t\' where id =\''.$user_id.'\'';
-  $make_admin = pg_query($db_connection, $stmt);
-}
+//Author: Ully Martins
+//Description: Function for create post
+//Date created: 29/04/2022
+//Date modified:
+function create_post($db_connection,$user_id, $title, $content) {
+  //create new post
+  $stmt = 'insert into "Posts" (title, content, user_id) values (\''.$title.'\,\''.$content.'\,\''.$user_id.'\')';
 
-function revoke_admin($db_connection, $user_id) {
-  // Revoke a user's Admin previleges
-  $stmt = 'update "Users" set "is_admin" = \'f\' where id =\''.$user_id.'\'';
-  $make_admin = pg_query($db_connection, $stmt);
-}
+  $create_post = pq_query($db_connection, $stmt);
+  //if (!$result) echo "<div class=\"error_msg\">Account creation failed. Please contact the administrators</div>";
 
-function revoke_approval($db_connection, $user_id) {
-  // Revoke a user's Admin previleges
-  $stmt = 'update "Users" set "approved" = \'f\' where id =\''.$user_id.'\'';
-  $make_admin = pg_query($db_connection, $stmt);
-}
 
-function grant_approval($db_connection, $user_id) {
-  // Revoke a user's Admin previleges
-  $stmt = 'update "Users" set "approved" = \'t\' where id =\''.$user_id.'\'';
-  $make_admin = pg_query($db_connection, $stmt);
-}
 
-function create_post() {
-  return;
 }
 
 ?>

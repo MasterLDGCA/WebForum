@@ -1,9 +1,8 @@
 <!--
-filename: Ully Gamarra Martins
-author: Ully Gamarra Martins
+File Author: Ully Gamarra Martins
 created: 14/03/2022
-last modified: 14/03/2022
-description: Assignment 1 Content Management Systems (CMS)
+last modified: 25/04/2022
+
 -->
 
 <?php
@@ -34,7 +33,7 @@ $errors = null;
 		 $sql = pg_query($db_connection, $stmt);
 		 while ($row = pg_fetch_assoc($sql)) {
 			 print_r($row);
-			 //echo '<option value="'.htmlspecialchars($row['id']).'">'$row['title']</option>';
+			 echo '<option value="'.htmlspecialchars($row["id"]).'">'.$row["title"].'</option>';
 		 }
 	?>
 	</select>

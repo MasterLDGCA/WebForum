@@ -12,10 +12,15 @@ require 'inc/functions.inc.php';
 //Date modified:
   if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
     // Add user to the database
-    echo "potato";
-    create_post($db_connection,$userID,$_POST["title"],$_POST["content"]);
+    create_post($db_connection, $_POST["title"], $_POST["content"], $userID);
   }
   
+
+if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
+    // Add user to the database
+    create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
+ }
+
 if (!empty($_POST["post_like"])) {
   requireLogin();
   post_like_clicked($db_connection, $_POST["post_like"], $userID);
@@ -126,7 +131,7 @@ if (!empty($_POST["comment_like"])) {
           echo "<div class=\"comment_author\">";
           echo ($_SESSION['username']) ? $_SESSION['username'] : "<a href=\"/login.php\">Login/Register</a>";
           echo "</div>";
-          echo "<div class=\"comment_content\"><input name=\"comment_content\" placeholder=\"Add your commnent here\"></div>";
+          echo "<div class=\"comment_content\"><input name=\"comment_content\" placeholder=\"Add your comment here\"></div>";
           echo "<div class=\"comment_date\">".date('Y-m-d H:i:s')."</div>";
           echo "<div class=\"forum_button\">
                   <button class=\"like_button\">Comment</button>";

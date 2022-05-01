@@ -1,4 +1,7 @@
 <?php
+// Author: Charith Akalanka
+// Description: Administrator control panel
+
 define( 'PAGE', 'Admin' );
 define( 'PAGE_TITLE', 'Admin');
 

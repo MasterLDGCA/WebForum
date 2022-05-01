@@ -84,32 +84,30 @@ function comment_like_clicked( $db_connection, $comment_id, $user_id ) {
 
 }
 
-function make_admin($db_connection, $user_id) {
-  // Grants a user Admin previleges
-  $stmt = 'update "Users" set "is_admin" = \'t\' where id =\''.$user_id.'\'';
-  $make_admin = pg_query($db_connection, $stmt);
+//Author: Ully Martins
+//Description: Function for create post
+//Date created: 29/04/2022
+//Date modified:
+function create_post($db_connection, $title, $content, $user_id) {
+  //create new post
+  $stmt = 'insert into "Posts" (user_id, title, content) values (\''.$user_id.'\',\''.$title.'\',\''.$content.'\')';
+  $stmt = 'insert into "Posts" (user_id, title, content) values (\''.$title.'\',\''.$content.'\')';
+  $create_post = pg_query($db_connection, $stmt);
+  //if (!$result) echo "<div class=\"error_msg\">Account creation failed. Please contact the administrators</div>";
+
 }
 
-function revoke_admin($db_connection, $user_id) {
-  // Revoke a user's Admin previleges
-  $stmt = 'update "Users" set "is_admin" = \'f\' where id =\''.$user_id.'\'';
-  $make_admin = pg_query($db_connection, $stmt);
-}
-
-function revoke_approval($db_connection, $user_id) {
-  // Revoke a user's Admin previleges
-  $stmt = 'update "Users" set "approved" = \'f\' where id =\''.$user_id.'\'';
-  $make_admin = pg_query($db_connection, $stmt);
-}
-
-function grant_approval($db_connection, $user_id) {
-  // Revoke a user's Admin previleges
-  $stmt = 'update "Users" set "approved" = \'t\' where id =\''.$user_id.'\'';
-  $make_admin = pg_query($db_connection, $stmt);
-}
-
-function create_post() {
-  return;
-}
+//Author: Ully Martins
+//Description: Function for create comment
+//Date created: 29/04/2022
+//Date modified:
+  function create_comment($db_connection, $comment, $user_id, $post_id) {
+    //create new post
+    $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';
+  
+    $create_post = pg_query($db_connection, $stmt);
+    //if (!$result) echo "<div class=\"error_msg\">Account creation failed. Please contact the administrators</div>";
+  
+  }
 
 ?>

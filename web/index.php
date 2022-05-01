@@ -6,6 +6,21 @@ require 'inc/header.inc.php';
 require 'inc/functions.inc.php';
 // requireLogin();
 
+//Author: Ully Martins
+//Description: Function for create post
+//Date created: 29/04/2022
+//Date modified:
+  if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
+    // Add user to the database
+    create_post($db_connection, $_POST["title"], $_POST["content"], $userID);
+  }
+
+
+if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
+    // Add user to the database
+    create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
+ }
+
 if (!empty($_POST["post_like"])) {
   requireLogin();
   post_like_clicked($db_connection, $_POST["post_like"], $userID);
@@ -134,7 +149,7 @@ if (!empty($_POST["comment_like"])) {
             <th>Score</th>
           </tr>
           <?php
-            $stmt = ' select concat(u2.first_name,\' \',u2.last_name) , post_likes.author, post_likes.post_likes , comment_likes.comment_likes , coalesce(post_likes.post_likes, 0) + coalesce(comment_likes.comment_likes, 0) as score
+            $stmt = ' select concat(u2.first_name,\' \',u2.last_name) , post_likes.author, post_likes.post_likes , comment_likes.comment_likes
                       from (select u.id as author , sum(post_likes.likes) as post_likes
                       		from "Users" u
                       		left join "Posts" p on p.user_id = u.id
@@ -146,19 +161,19 @@ if (!empty($_POST["comment_like"])) {
                       		left join (select cl.comment_id, count(*) as likes from "CommentLikes" cl where cl.created_at >\''.date('Y-m-d', strtotime('-1 week')).'\' group by cl.comment_id) as comment_likes on comment_likes.comment_id = c.id
                       		group by author) as comment_likes
                       on post_likes.author = comment_likes.author
-                      left join "Users" u2 on u2.id = post_likes.author
-                      order by score desc';
+                      left join "Users" u2 on u2.id = post_likes.author';
 
             $alltime_leaders = pg_query($db_connection, $stmt);
 
             while ($alltime_leader_row = pg_fetch_row($alltime_leaders)) {
               // print_r($alltime_leader_row);
-              if ($alltime_leader_row[4]<1) continue;
+              $final_score = $alltime_leader_row[2] + $alltime_leader_row[3];
+              if (!$final_score) continue;
               echo "<tr>";
               echo "<td>".$alltime_leader_row[0]."</td>";
               echo "<td>".$alltime_leader_row[2]."</td>";
               echo "<td>".$alltime_leader_row[3]."</td>";
-              echo "<td>".$alltime_leader_row[4]."</td>";
+              echo "<td>".$final_score."</td>";
               echo "</tr>";
             }
 
@@ -178,7 +193,7 @@ if (!empty($_POST["comment_like"])) {
             <th>Score</th>
           </tr>
           <?php
-            $stmt = ' select concat(u2.first_name,\' \',u2.last_name) , post_likes.author, post_likes.post_likes , comment_likes.comment_likes , coalesce(post_likes.post_likes, 0) + coalesce(comment_likes.comment_likes, 0) as score
+            $stmt = ' select concat(u2.first_name,\' \',u2.last_name) , post_likes.author, post_likes.post_likes , comment_likes.comment_likes
                       from (select u.id as author , sum(post_likes.likes) as post_likes
                       		from "Users" u
                       		left join "Posts" p on p.user_id = u.id
@@ -190,8 +205,7 @@ if (!empty($_POST["comment_like"])) {
                       		left join (select cl.comment_id, count(*) as likes from "CommentLikes" cl group by cl.comment_id) as comment_likes on comment_likes.comment_id = c.id
                       		group by author) as comment_likes
                       on post_likes.author = comment_likes.author
-                      left join "Users" u2 on u2.id = post_likes.author
-                      order by score desc';
+                      left join "Users" u2 on u2.id = post_likes.author';
 
             $alltime_leaders = pg_query($db_connection, $stmt);
           ?>

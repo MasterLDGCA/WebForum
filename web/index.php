@@ -30,11 +30,12 @@ if (!empty($_POST["comment_like"])) {
                   order by p.created_at desc';
         $posts = pg_query($db_connection, $stmt);
 
-        while ($post_row = pg_fetch_row($posts)) {
-          echo "<div class=\"post_node\">";
-          echo "<div class=\"post_title_node\">";
-          echo "<img class=\"post_img\" src=\"images/die.png\" alt=\"\"><div class=\"post_title\">".$post_row[0]."</div>";
-          echo "<div class=\"post_tags\">";
+        while ($post_row = pg_fetch_row($posts)) : ?>
+          <div class="post_node">
+          <div class="post_title_node">
+          <img class="post_img" src="images/die.png" alt=""><div class="post_title"><?php echo $post_row[0]; ?></div>
+          <div class="post_tags">
+          <?php
           // Retrieve tags
           $stmt = 'select s.title from "PostSubject" ps
                     left join "Subjects" s on ps.subj_id = s.id
@@ -55,25 +56,23 @@ if (!empty($_POST["comment_like"])) {
 
             $check_liked = pg_query($db_connection, $stmt);
             $post_liked = pg_num_rows($check_liked);
-          }
+          } ?>
 
-          echo "</div>";
-          echo "</div>";
-          echo "<div class=\"post_content\">".$post_row[1];
-          echo "<div class=\"forum_button\">
-                  <form method=\"POST\" action=\"index.php\">
-                    <input type=\"hidden\" name=\"post_like\" value=\"".$post_row[5]."\">
-                    <button type=\"submit\" class=\"like_button";
-          echo ($post_liked) ? " clicked" : "";
-          echo "\"><span class=\"glyphicon glyphicon-thumbs-up\"></span> ";
-          echo ($post_row[6]) ? $post_row[6] : "Like";
-          echo "</button></form></div>";
-          echo "</div>"; // post_content
-          echo "<div class=\"post_footer\">";
-          echo "<div class=\"post_author\">".$post_row[2]." ".$post_row[3]."</div>";
-          echo "<div class=\"post_date\">(".date('Y-m-d H:i:s',strtotime($post_row[4])).")</div>";
-          echo "</div>";
-
+          </div>
+          </div>
+          <div class="post_content"><?php echo $post_row[1]; ?>
+          <div class="forum_button">
+            <form method="POST" action="index.php">
+              <input type="hidden" name="post_like" value="<?php echo $post_row[5];?>">
+              <button type="submit" class="like_button" <?php echo ($post_liked) ? " clicked" : ""; ?>><span class="glyphicon glyphicon-thumbs-up"></span><?php echo ($post_row[6]) ? $post_row[6] : "Like";?></button>
+            </form>
+          </div>
+          </div>
+          <div class="post_footer">
+            <div class="post_author"><?php echo $post_row[2]." ".$post_row[3]; ?></div>
+            <div class="post_date">(<?php echo date('Y-m-d H:i:s',strtotime($post_row[4])) ?>)</div>
+          </div>
+          <?php
           // Retrieve comments
           $stmt = ' select u.first_name , u.last_name , c."comment" , c.created_at , likes , c.id
                     from "Comments" c
@@ -82,49 +81,44 @@ if (!empty($_POST["comment_like"])) {
                     			from "CommentLikes" cl
                     			group by cl.comment_id ) as likes on likes.comment_id = c.id
                     where c.visible = true and c.approved = true and c.post_id = '.$post_row[5].'order by c.created_at';
-
           $comments = pg_query($db_connection, $stmt);
+          ?>
 
-          while ($comment_row = pg_fetch_row($comments)) {
+          <?php while ($comment_row = pg_fetch_row($comments)) : ?>
+            <?php
+              // Has the user liked this comment?
+              $comment_liked = false;
+              if ($loggedIn) {
+                $stmt ='select *
+                        from "CommentLikes" cl
+                        where cl.user_id ='.$_SESSION['user_id'].' and cl.comment_id ='.$comment_row[5];
 
-            // Has the user liked this comment?
-            $comment_liked = false;
-            if ($loggedIn) {
-              $stmt ='select *
-                      from "CommentLikes" cl
-                      where cl.user_id ='.$_SESSION['user_id'].' and cl.comment_id ='.$comment_row[5];
+                $check_liked = pg_query($db_connection, $stmt);
+                $comment_liked = pg_num_rows($check_liked);
+              }
+            ?>
 
-              $check_liked = pg_query($db_connection, $stmt);
-              $comment_liked = pg_num_rows($check_liked);
-            }
+            <div class="comment_node">
+            <div class="comment_author">"<?php echo $comment_row[0]." ".$comment_row[1]; ?></div>
+            <div class="comment_content"><?php echo $comment_row[2] ?></div>
+            <div class="comment_date"><?php echo date('Y-m-d H:i:s',strtotime($comment_row[3])) ?></div>
+            <div class="forum_button">
+              <form method="POST" action="index.php">
+                <input type="hidden" name="comment_like" value="<?php echo $comment_row[5]; ?>">
+                <button type="submit" class="like_button <?php echo ($comment_liked) ? " clicked" : ""; ?>"><span class="glyphicon glyphicon-thumbs-up"></span><?php echo ($comment_row[4]) ? $comment_row[4] : "Like"; ?></button>
+              </form>
+            </div>
+            </div>
+          <?php endwhile;?>
 
-            echo "<div class=\"comment_node\">";
-            echo "<div class=\"comment_author\">".$comment_row[0]." ".$comment_row[1]."</div>";
-            echo "<div class=\"comment_content\">".$comment_row[2]."</div>";
-            echo "<div class=\"comment_date\">".date('Y-m-d H:i:s',strtotime($comment_row[3]))."</div>";
-            echo "<div class=\"forum_button\">
-                    <form method=\"POST\" action=\"index.php\">
-                      <input type=\"hidden\" name=\"comment_like\" value=\"".$comment_row[5]."\">
-                      <button type=\"submit\" class=\"like_button";
-            echo ($comment_liked) ? " clicked" : "";
-            echo "\"><span class=\"glyphicon glyphicon-thumbs-up\"></span> ";
-            echo ($comment_row[4]) ? $comment_row[4] : "Like";
-            echo "</button></form></div>";
-            echo "</div>";
-          }
-          echo "<div class=\"comment_node\">";
-          echo "<div class=\"comment_author\">";
-          echo ($_SESSION['username']) ? $_SESSION['username'] : "<a href=\"/login.php\">Login/Register</a>";
-          echo "</div>";
-          echo "<div class=\"comment_content\"><input name=\"comment_content\" placeholder=\"Add your commnent here\"></div>";
-          echo "<div class=\"comment_date\">".date('Y-m-d H:i:s')."</div>";
-          echo "<div class=\"forum_button\">
-                  <button class=\"like_button\">Comment</button>";
-          echo "</div>";
-          echo "</div>";
-          echo "</div>";
-        }
-      ?>
+          <div class="comment_node">
+            <div class="comment_author"><?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : "<a href=\"/login.php\">Login/Register</a>"; ?></div>
+            <div class="comment_content"><input name="comment_content" placeholder="Add your commnent here"></div>
+            <div class="comment_date"><?php echo date('Y-m-d H:i:s') ?></div>
+            <div class="forum_button"><button class="like_button">Comment</button></div>
+          </div>
+        </div>
+      <?php endwhile; ?>
     </div>
     <div class="leader_box">
       <div class="leaderboard_top">
@@ -200,19 +194,17 @@ if (!empty($_POST["comment_like"])) {
                       order by score desc';
 
             $alltime_leaders = pg_query($db_connection, $stmt);
-
-            while ($alltime_leader_row = pg_fetch_row($alltime_leaders)) {
-              // print_r($alltime_leader_row);
-              if ($alltime_leader_row[4]<1) continue;
-              echo "<tr>";
-              echo "<td>".$alltime_leader_row[0]."</td>";
-              echo "<td>".$alltime_leader_row[2]."</td>";
-              echo "<td>".$alltime_leader_row[3]."</td>";
-              echo "<td>".$alltime_leader_row[4]."</td>";
-              echo "</tr>";
-            }
-
           ?>
+
+          <?php while ($alltime_leader_row = pg_fetch_row($alltime_leaders)) :?>
+              <?php if ($alltime_leader_row[4]<1) continue; ?>
+              <tr>
+                <td><?php echo $alltime_leader_row[0] ?></td>
+                <td><?php echo $alltime_leader_row[2] ?></td>
+                <td><?php echo $alltime_leader_row[3] ?></td>
+                <td><?php echo $alltime_leader_row[4] ?></td>
+              </tr>
+          <?php endwhile; ?>
         </table>
       </div>
     </div>

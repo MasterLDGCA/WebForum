@@ -91,10 +91,8 @@ function comment_like_clicked( $db_connection, $comment_id, $user_id ) {
 function create_post($db_connection, $title, $content, $user_id) {
   //create new post
   $stmt = 'insert into "Posts" (user_id, title, content) values (\''.$user_id.'\',\''.$title.'\',\''.$content.'\')';
-  $stmt = 'insert into "Posts" (user_id, title, content) values (\''.$title.'\',\''.$content.'\')';
   $create_post = pg_query($db_connection, $stmt);
-  //if (!$result) echo "<div class=\"error_msg\">Account creation failed. Please contact the administrators</div>";
-
+  if (!$create_post) echo "<div class=\"error_msg\">Post creation failed</div>";
 }
 
 //Author: Ully Martins
@@ -104,10 +102,10 @@ function create_post($db_connection, $title, $content, $user_id) {
   function create_comment($db_connection, $comment, $user_id, $post_id) {
     //create new post
     $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';
-  
+
     $create_post = pg_query($db_connection, $stmt);
     //if (!$result) echo "<div class=\"error_msg\">Account creation failed. Please contact the administrators</div>";
-  
+
   }
 
 ?>

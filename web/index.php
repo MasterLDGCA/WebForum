@@ -11,13 +11,11 @@ require 'inc/functions.inc.php';
 //Date created: 29/04/2022
 //Date modified:
   if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
-    // Add user to the database
     create_post($db_connection, $_POST["title"], $_POST["content"], $userID);
   }
 
 
 if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
-    // Add user to the database
     create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
  }
 

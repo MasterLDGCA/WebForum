@@ -92,6 +92,34 @@ function comment_like_clicked( $db_connection, $comment_id, $user_id ) {
 
 }
 
+// Author: Charith Akalanka
+// Description: Grants a user Admin previleges
+function make_admin($db_connection, $user_id) {
+  $stmt = 'update "Users" set "is_admin" = \'t\' where id =\''.$user_id.'\'';
+  $make_admin = pg_query($db_connection, $stmt);
+}
+
+// Author: Charith Akalanka
+// Description: Revoke a user's Admin previleges
+function revoke_admin($db_connection, $user_id) {
+  $stmt = 'update "Users" set "is_admin" = \'f\' where id =\''.$user_id.'\'';
+  $make_admin = pg_query($db_connection, $stmt);
+}
+
+// Author: Charith Akalanka
+// Description: Ban a user
+function revoke_approval($db_connection, $user_id) {
+  $stmt = 'update "Users" set "approved" = \'f\' where id =\''.$user_id.'\'';
+  $make_admin = pg_query($db_connection, $stmt);
+}
+
+// Author: Charith Akalanka
+// Description: Approve(un-ban) a user
+function grant_approval($db_connection, $user_id) {
+  $stmt = 'update "Users" set "approved" = \'t\' where id =\''.$user_id.'\'';
+  $make_admin = pg_query($db_connection, $stmt);
+}
+
 //Author: Ully Martins
 //Description: Function for create post
 //Date created: 29/04/2022

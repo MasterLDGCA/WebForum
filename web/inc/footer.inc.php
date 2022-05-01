@@ -1,3 +1,7 @@
+<?php
+// Author: Charith Akalanka
+// Description: Simple footer with user details
+?>
 <div class="footer_box">
   <div class="footer_content">
     <div class="">

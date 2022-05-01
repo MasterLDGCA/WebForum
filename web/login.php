@@ -1,4 +1,7 @@
 <?php
+// Author: Charith Akalanka
+// Description: Login mechanism
+
 define( 'PAGE', 'Login' );
 define( 'PAGE_TITLE', 'Login');
 

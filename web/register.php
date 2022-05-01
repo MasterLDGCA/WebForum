@@ -1,4 +1,7 @@
 <?php
+// Author: Charith Akalanka
+// Description: New user registration page
+
 define( 'PAGE', 'Register' );
 define( 'PAGE_TITLE', 'Register');
 

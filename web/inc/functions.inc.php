@@ -1,5 +1,7 @@
 <?php
 
+// Author: Charith Akalanka
+// Description: Create new user account from the register page
 function insert_user($db_connection, $fname, $lname, $email, $password) {
   // prepare statement for insert
   $pass_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -15,6 +17,8 @@ function insert_user($db_connection, $fname, $lname, $email, $password) {
   }
 }
 
+// Author: Charith Akalanka
+// Description: Validate user data inserted on the register page
 function new_user_validation() {
   if (!empty($_POST["fname"])    && preg_match("/[^a-zA-Z]/", $_POST["fname"]))          $errors[] = "First name can only contain letters";
   if (!empty($_POST["lname"])    && preg_match("/[^a-zA-Z]/", $_POST["lname"]))          $errors[] = "Last name can only contain letters";
@@ -30,6 +34,8 @@ function new_user_validation() {
   else return 0;
 }
 
+// Author: Charith Akalanka
+// Description: Record a click on the post like button
 function post_like_clicked( $db_connection, $post_id, $user_id ) {
   // echo "Post ID:".$post_id." User ID:".$user_id;
 
@@ -57,6 +63,8 @@ function post_like_clicked( $db_connection, $post_id, $user_id ) {
 
 }
 
+// Author: Charith Akalanka
+// Description: Record a click on the comment like button
 function comment_like_clicked( $db_connection, $comment_id, $user_id ) {
   // echo "Comment ID:".$comment_id." User ID:".$user_id;
 

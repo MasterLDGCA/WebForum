@@ -1,4 +1,7 @@
 <?php
+// Author: Charith Akalanka
+// Description: User profile management page
+
 define( 'PAGE', 'Home' );
 define( 'PAGE_TITLE', 'Home');
 

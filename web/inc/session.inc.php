@@ -1,4 +1,7 @@
 <?php
+// Author: Charith Akalanka
+// Description: Establishing a session on user login
+
 if( session_status() == PHP_SESSION_NONE ) session_start();
 
 $loggedIn = false;

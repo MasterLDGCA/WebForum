@@ -59,12 +59,12 @@ function requireLogin(){
           <div class="form-group">
             <input type="password" id="inputPassword" name="password" placeholder="Password" required <?php echo ($_POST['name']) ? autofocus : "" ?>>
           </div>
-          <button type="submit" class="btn btn-secondary">Login</button>
+          <button type="submit" class="loginRegisterButton">Login</button>
         </form>
         <p></p>
         <p>Or</p>
         <form method="get" action="/register.php">
-          <button type="submit" class="btn btn-secondary">Register</button>
+          <button type="submit" class="loginRegisterButton">Register</button>
         </form>
       </div>
     </div>

@@ -19,6 +19,7 @@ function insert_user($db_connection, $fname, $lname, $email, $password) {
 
 // Author: Charith Akalanka
 // Description: Validate user data inserted on the register page
+// Date modified: 03/05/2022 by Jordan Junior
 function new_user_validation() {
   if (!empty($_POST["fname"])    && preg_match("/[^a-zA-Z]/", $_POST["fname"]))          $errors[] = "First name can only contain letters";
   if (!empty($_POST["lname"])    && preg_match("/[^a-zA-Z]/", $_POST["lname"]))          $errors[] = "Last name can only contain letters";
@@ -28,10 +29,12 @@ function new_user_validation() {
   if (!empty($_POST["password"]) && !preg_match('/[A-Z]/',$_POST["password"]))           $errors[] = "Password must contain UPPERCASE characters";
   if (!empty($_POST["password"]) && !preg_match('/[0-9]/',$_POST["password"]))           $errors[] = "Password must contain numbers";
   if (!empty($_POST["password"]) && !preg_match('/[\.\?\(\)@#\$%&\*]/',$_POST["password"])) $errors[] = "Password must contain \$pec!al (har@ctors";
-  if ($_POST["password"] != $_POST["password2"])                                         $errors[] = "The passwords do not match";
+  if (isset($_POST["password"]) && isset($_POST["password2"]) && $_POST["password"] != $_POST["password2"])  $errors[] = "The passwords do not match";
 
-  if ($errors) return $errors;
-  else return 0;
+  if (isset($errors)) 
+    return $errors;
+  else 
+    return 0;
 }
 
 // Author: Charith Akalanka

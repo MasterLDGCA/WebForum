@@ -1,6 +1,7 @@
 <?php
 // Author: Charith Akalanka
 // Description: User profile management page
+// Date modified: 03/05/2022 by Jordan Junior
 
 define( 'PAGE', 'Home' );
 define( 'PAGE_TITLE', 'Home');

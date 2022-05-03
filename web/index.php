@@ -24,6 +24,13 @@ if (!empty($_POST["comment_like"])) {
   requireLogin();
   comment_like_clicked($db_connection, $_POST["comment_like"], $userID);
 }
+
+//HAMISH IF!MOTHAFAKKAS
+if (!empty($_POST["post_report"])) {
+  requireLogin();
+  flag_post($db_connection, $_POST["post_report"]);
+}
+
 ?>
 <div class="content">
   <div class="view">
@@ -75,6 +82,13 @@ if (!empty($_POST["comment_like"])) {
               <input type="hidden" name="post_like" value="<?php echo $post_row[5];?>">
               <button type="submit" class="like_button" <?php echo ($post_liked) ? " clicked" : ""; ?>><span class="glyphicon glyphicon-thumbs-up"></span><?php echo ($post_row[6]) ? $post_row[6] : "Like";?></button>
             </form>
+
+            <!-- Hamish Sandys-Renton - Report Button with PHP 02/05/2022-->
+            <form method="POST" action="index.php">
+              <input type="hidden" name="post_report" value="<?php echo $post_row[5];?>">
+              <button type="submit" class="report_button" id="flag_button">FLAG</button>
+            </form>
+
           </div>
           </div>
           <div class="post_footer">

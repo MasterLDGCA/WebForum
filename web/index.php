@@ -15,10 +15,6 @@ require 'inc/functions.inc.php';
   }
 
 
-if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
-    create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
- }
-
 if (!empty($_POST["post_like"])) {
   requireLogin();
   post_like_clicked($db_connection, $_POST["post_like"], $userID);
@@ -126,9 +122,17 @@ if (!empty($_POST["comment_like"])) {
 
           <div class="comment_node">
             <div class="comment_author"><?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : "<a href=\"/login.php\">login</a>"; ?></div>
-            <div class="comment_content"><input name="comment_content" placeholder="Add your commnent here"></div>
+            <div class="comment_content"><input name="comment_content" placeholder="Add your commnent here" value="<?php echo (isset($_POST['comment'])) ? autofocus : ""?>"></div>
             <div class="comment_date"><?php echo date('Y-m-d H:i:s') ?></div>
-            <div class="forum_button"><button class="like_button">Comment</button></div>
+            <div class="forum_button">
+                <button type="submit" class="comment">Comment</button>
+            </div>
+              <?php
+               if (!empty($_POST["comment"])) {
+                  echo("potato");
+                  create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
+                }
+              ?>
           </div>
         </div>
       <?php endwhile; ?>

@@ -72,7 +72,6 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
 
 // print_r($_POST);
 
-
 ?>
 <div class="content">
   <div class="view">
@@ -185,7 +184,15 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             <div class="comment_author"><?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : "<a href=\"/login.php\">login</a>"; ?></div>
             <div class="comment_content"><input name="comment_content" placeholder="Add your commnent here" value="<?php echo (isset($_POST['comment'])) ? autofocus : ""?>"></div>
             <div class="comment_date"><?php echo date('Y-m-d H:i:s') ?></div>
-            <div class="forum_button"><button type="submit" name="comment" class="like_button">Comment</button></div>
+            <div class="forum_button">
+                <button type="submit" class="like_button">Comment</button>
+            </div>
+              <?php
+               if (!empty($_POST["comment"])) {
+                  echo("potato");
+                  create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
+                }
+              ?>
           </div>
         </div>
       <?php endwhile; ?>

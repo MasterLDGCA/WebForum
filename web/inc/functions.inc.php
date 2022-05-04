@@ -151,12 +151,11 @@ function create_comment($db_connection, $comment, $user_id, $post_id) {
 //Description:Flag/Report Post Function
 //Date created: 29/04/2022
 //Date modified:
-  function flag_post($db_connection, $id) {
-    //var_dump($id);  //dump on screen what is in $id
-    $flag = 'UPDATE "Posts" SET visible=false, approved=false WHERE id = '.$id;
-    $flag_p = pg_query($db_connection, $flag);
-    if (!$flag_p) echo "<div class=\"error_msg\">Flaggin failed</div>";
-  }
+function flag_post($db_connection, $id) {
+  //var_dump($id);  //dump on screen what is in $id
+  $flag = 'UPDATE "Posts" SET visible= false WHERE id = '.$id;
+  $flag_p = pg_query($db_connection, $flag);
+}
 
 
 

@@ -57,6 +57,16 @@
   margin: 0px 20px;
 }
 
+.search_box {
+  padding: 15px;
+  border: 1px solid white;
+  border-radius: 10px;
+  width: 95% !important;
+  margin: auto;
+  margin-bottom: 10px;
+  background: blue;
+}
+
 .post_box {
   width: 75%;
 }

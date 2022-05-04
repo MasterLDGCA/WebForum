@@ -29,7 +29,43 @@ if (!empty($_POST["comment_like"])) {
   comment_like_clicked($db_connection, $_POST["comment_like"], $userID);
 }
 
-print_r($_POST);
+// Retrieve posts
+$stmt = ' select p.title , p.content , u.first_name , u.last_name, p.created_at , p.id , likes
+          from "Posts" p
+          left join "Users" u ON p.user_id = u.id
+          left join (	select pl.post_id , count(pl.user_id) as likes
+          			from "PostLikes" pl
+          			group by pl.post_id ) as likes on likes.post_id = p.id
+          left join "PostSubject" ps on ps.post_id = p.id
+          left join "Subjects" s on s.id = ps.subj_id
+          where p.visible = true and p.approved = true';
+
+
+if (isset($_POST["search-button"])) {
+  // Search button clicked
+  if (isset($_POST["subject"]) && preg_match("/^\d+$/",$_POST["subject"])) {
+    // A subject is selected
+    $stmt .= ' and s.id ='.$_POST["subject"];
+  } else {
+    // Invalid subject code
+    unset($_POST["subject"]);
+  }
+
+  if (isset($_POST["date"]) && preg_match("/^\d{4}-\d{2}-\d{2}$/",$_POST["date"])) {
+    // A date is selected
+    $stmt .= " and CAST(p.created_at as DATE) = '{$_POST["date"]}'";
+  } else {
+    // invalid date
+    unset($_POST["date"]);
+  }
+}
+
+$stmt_end = ' order by p.created_at desc';
+
+$posts = pg_query($db_connection, $stmt.$stmt_end);
+
+// print_r($_POST);
+
 ?>
 <div class="content">
   <div class="view">
@@ -38,61 +74,51 @@ print_r($_POST);
         <form class="" action="index.php" method="post">
           <input type="text" name="searchTerm" placeholder="Enter a search phrase" value="">
           <select class="" name="subject">
+            <option value="all">All</option>
             <?php
-              $stmt = ' select id, title from "Subjects"';
+              $stmt = ' select id, title from "Subjects" order by id';
               $subjects = pg_query($db_connection, $stmt);
               while ($subject = pg_fetch_row($subjects)) :
             ?>
-            <option value="<?php echo $subject[0]; ?>"><?php echo $subject[1]; ?></option>
+            <option value="<?php echo $subject[0]; ?>" <?php echo (isset($_POST["subject"]) && $_POST["subject"]===$subject[0]) ? "selected=\"selected\"" : "" ?> ><?php echo $subject[1]; ?></option>
             <?php endwhile; ?>
           </select>
-          <input type="date" name="date" value="">
-          <button type="submit" name="button">Search</button>
+          <input type="date" name="date" value="<?php echo (isset($_POST["date"]) ? $_POST["date"] : "none") ?>">
+          <button type="submit" name="search-button" value="1">Search</button>
         </form>
       </div>
-      <?php
-        $stmt = ' select p.title , p.content , u.first_name , u.last_name, p.created_at , p.id , likes
-                  from "Posts" p
-                  left join "Users" u ON p.user_id = u.id
-                  left join (select pl.post_id , count(pl.user_id) as likes
-                  			from "PostLikes" pl
-                  			group by pl.post_id ) as likes on likes.post_id = p.id
-                  where p.visible = true and p.approved = true
-                  order by p.created_at desc';
-        $posts = pg_query($db_connection, $stmt);
-
-        while ($post_row = pg_fetch_row($posts)) : ?>
+      <?php while ($post_row = pg_fetch_row($posts)) : ?>
           <div class="post_node">
           <div class="post_title_node">
           <img class="post_img" src="images/die.png" alt=""><div class="post_title"><?php echo $post_row[0]; ?></div>
           <div class="post_tags">
           <?php
-          // Retrieve tags
-          $stmt = 'select s.title from "PostSubject" ps
-                    left join "Subjects" s on ps.subj_id = s.id
-                    where post_id ='.$post_row[5];
+            // Retrieve tags
+            $stmt = 'select s.title from "PostSubject" ps
+                      left join "Subjects" s on ps.subj_id = s.id
+                      where post_id ='.$post_row[5];
 
-          $tags = pg_query($db_connection, $stmt);
+            $tags = pg_query($db_connection, $stmt);
 
-          while ($tag_title = pg_fetch_row($tags)) {
-            echo "<div class=\"tag\">".$tag_title[0]."</div>";
-          }
-
-          // Has the user liked this post?
-          $post_liked = false;
-          if ($loggedIn) {
-            $stmt ='select *
-                    from "PostLikes" pl
-                    where pl.user_id ='.$_SESSION['user_id'].' and pl.post_id ='.$post_row[5];
-
-            $check_liked = pg_query($db_connection, $stmt);
-            $post_liked = pg_num_rows($check_liked);
-          } ?>
-
+            while ($tag_title = pg_fetch_row($tags)) : ?>
+              <div class="tag"><?php echo $tag_title[0]; ?></div>
+          <?php endwhile; ?>
           </div>
           </div>
           <div class="post_content"><?php echo $post_row[1]; ?>
           <div class="forum_button">
+            <?php
+              // Has the user liked this post?
+              $post_liked = false;
+              if ($loggedIn) {
+                $stmt ='select *
+                        from "PostLikes" pl
+                        where pl.user_id ='.$_SESSION['user_id'].' and pl.post_id ='.$post_row[5];
+
+                $check_liked = pg_query($db_connection, $stmt);
+                $post_liked = pg_num_rows($check_liked);
+              }
+            ?>
             <form method="POST" action="index.php">
               <input type="hidden" name="post_like" value="<?php echo $post_row[5];?>">
               <button type="submit" class="like_button" <?php echo ($post_liked) ? " clicked" : ""; ?>><span class="glyphicon glyphicon-thumbs-up"></span><?php echo ($post_row[6]) ? $post_row[6] : "Like";?></button>

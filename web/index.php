@@ -44,8 +44,7 @@ $stmt = ' select p.title , p.content , u.first_name , u.last_name, p.created_at 
           			group by pl.post_id ) as likes on likes.post_id = p.id
           left join "PostSubject" ps on ps.post_id = p.id
           left join "Subjects" s on s.id = ps.subj_id
-          where p.visible = true and p.approved = true';
-
+          where p.visible = true and (p.approved is null or p.approved = true)';
 
 if (isset($_POST["search-button"])) {
   // Search button clicked
@@ -127,7 +126,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             ?>
             <form method="POST" action="index.php">
               <input type="hidden" name="post_like" value="<?php echo $post_row[5];?>">
-              <button type="submit" class="like_button" <?php echo ($post_liked) ? " clicked" : ""; ?>><span class="glyphicon glyphicon-thumbs-up"></span> <?php echo ($post_row[6]) ? $post_row[6] : " Like";?></button>
+              <button type="submit" class="like_button<?php echo ($post_liked) ? " clicked" : ""; ?>" ><span class="glyphicon glyphicon-thumbs-up"></span> <?php echo ($post_row[6]) ? $post_row[6] : " Like";?></button>
             </form>
 
             <!-- Hamish Sandys-Renton - Report Button with PHP 02/05/2022-->
@@ -150,7 +149,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
                     left join (select cl.comment_id , count(cl.user_id) as likes
                     			from "CommentLikes" cl
                     			group by cl.comment_id ) as likes on likes.comment_id = c.id
-                    where c.visible = true and c.approved = true and c.post_id = '.$post_row[5].'order by c.created_at';
+                    where c.visible = true and p.approved != false and c.post_id = '.$post_row[5].'order by c.created_at';
           $comments = pg_query($db_connection, $stmt);
           ?>
 

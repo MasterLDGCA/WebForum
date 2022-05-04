@@ -14,20 +14,30 @@ if ( !$isAdmin ) {
   exit();
 }
 
-if ($_POST["revoke_admin"]) {
+if (isset($_POST["revoke_admin"])) {
   revoke_admin($db_connection, $_POST["revoke_admin"]);
 }
 
-if ($_POST["make_admin"]) {
+if (isset($_POST["make_admin"])) {
   make_admin($db_connection, $_POST["make_admin"]);
 }
 
-if ($_POST["revoke_approval"]) {
+if (isset($_POST["revoke_approval"])) {
   revoke_approval($db_connection, $_POST["revoke_approval"]);
 }
 
-if ($_POST["grant_approval"]) {
+if (isset($_POST["grant_approval"])) {
   grant_approval($db_connection, $_POST["grant_approval"]);
+}
+
+if (isset($_POST["approve_post"])) {
+  // Set approve to true and reported to false
+  approve_post($db_connection, $_POST["approve_post"]);
+}
+
+if (isset($_POST["delete_post"])) {
+  // Set approved to false and visible to false
+  delete_post($db_connection, $_POST["delete_post"]);
 }
 
 // Retrieve user details
@@ -38,17 +48,27 @@ while ($user = pg_fetch_row($check)) {
   $users[$user[0]] = $user;
 }
 
+// Retrieve reported posts
+$posts = [];
+$stmt = 'select * from "Posts" where reported=true and visible=true order by created_at desc';
+$check = pg_query($db_connection, $stmt);
+while($post = pg_fetch_row($check)) {
+  $posts[$post[0]] = $post;
+}
+
+print_r($_POST);
+
 ?>
 <div class="content">
   <!-- Tab links -->
   <div class="tab">
-    <button class="tablinks" onclick="openTab(event, 'Tab1')" id="defaultOpen">Manage Users</button>
-    <button class="tablinks" onclick="openTab(event, 'Tab2')">Tab2</button>
+    <button class="tablinks" onclick="openTab(event, 'Tab1')">Manage Users</button>
+    <button class="tablinks" onclick="openTab(event, 'Tab2')">Reported Content</button>
     <button class="tablinks" onclick="openTab(event, 'Tab3')">Tab3</button>
   </div>
 
   <!-- Tab content -->
-  <div id="Tab1" class="tabcontent">
+  <div id="Tab1" class="tabcontent <?php echo (!isset($_POST["tab"])) ? "active" : "" ?>">
      <h3>Manage Users</h3>
      <p>Following table presents all the registered users in the descending order of the registered date</p>
      <table class="user_table">
@@ -124,9 +144,36 @@ while ($user = pg_fetch_row($check)) {
      </table>
   </div>
 
-  <div id="Tab2" class="tabcontent">
-     <h3>Tab2</h3>
-     <p>Paris is the capital of France.</p>
+  <div id="Tab2" class="tabcontent <?php echo (isset($_POST["tab"]) && $_POST["tab"]==="Tab2") ? "active" : "" ?>">
+    <h3>Reported content</h3>
+    <p>This page presents all Discussions and Comments that were reported by users</p>
+    <p>Once "approved", users cannot report those items again</p>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Created on</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Author ID</th>
+        <th>Action</th>
+      </tr>
+    <?php foreach($posts as $post) : ?>
+      <tr>
+        <td><?php echo $post[0]; ?></td>
+        <td><?php echo $post[1]; ?></td>
+        <td><?php echo $post[2]; ?></td>
+        <td><?php echo $post[3]; ?></td>
+        <td><?php echo $post[4]; ?></td>
+        <td>
+          <form class="" action="admin.php" method="post">
+            <input type="hidden" name="tab" value="Tab2">
+            <button class="like_button" type="submit" name="approve_post" value="<?php echo $post[0]; ?>">Approve</button>
+            <button class="like_button" type="submit" name="delete_post" value="<?php echo $post[0]; ?>">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <?php endforeach; ?>
+    </table>
   </div>
 
   <div id="Tab3" class="tabcontent">
@@ -156,11 +203,6 @@ while ($user = pg_fetch_row($check)) {
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
   }
-</script>
-
-<script>
-  // Get the element with id="defaultOpen" and click on it
-  document.getElementById("defaultOpen").click();
 </script>
 
 <?php

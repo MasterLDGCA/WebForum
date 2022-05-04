@@ -248,6 +248,10 @@
  border-top: none;
 }
 
+.active {
+  display: block;
+}
+
 .user_table {
   width: 80%;
   margin: auto;

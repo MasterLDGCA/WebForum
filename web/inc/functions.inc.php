@@ -96,31 +96,45 @@ function comment_like_clicked( $db_connection, $comment_id, $user_id ) {
 }
 
 // Author: Charith Akalanka
-// Description: Grants a user Admin previleges
+// Description: Grants a user Admin previleges from admin dashboard
 function make_admin($db_connection, $user_id) {
   $stmt = 'update "Users" set "is_admin" = \'t\' where id =\''.$user_id.'\'';
   $make_admin = pg_query($db_connection, $stmt);
 }
 
 // Author: Charith Akalanka
-// Description: Revoke a user's Admin previleges
+// Description: Revoke a user's Admin previleges from admin dashboard
 function revoke_admin($db_connection, $user_id) {
   $stmt = 'update "Users" set "is_admin" = \'f\' where id =\''.$user_id.'\'';
   $make_admin = pg_query($db_connection, $stmt);
 }
 
 // Author: Charith Akalanka
-// Description: Ban a user
+// Description: Ban a user from admin dashboard
 function revoke_approval($db_connection, $user_id) {
   $stmt = 'update "Users" set "approved" = \'f\' where id =\''.$user_id.'\'';
   $make_admin = pg_query($db_connection, $stmt);
 }
 
 // Author: Charith Akalanka
-// Description: Approve(un-ban) a user
+// Description: Approve(un-ban) a user from admin dashboard
 function grant_approval($db_connection, $user_id) {
   $stmt = 'update "Users" set "approved" = \'t\' where id =\''.$user_id.'\'';
   $make_admin = pg_query($db_connection, $stmt);
+}
+
+// Author: Charith Akalanka
+// Description: Approve a reported post from admin dashboard
+function approve_post($db_connection, $post_id) {
+  $stmt = 'update "Posts" set approved=true, reported=false where id ='.$post_id;
+  $approve_post = pg_query($db_connection, $stmt);
+}
+
+// Author: Charith Akalanka
+// Description: Delete a reported post from admin dashboard
+function delete_post($db_connection, $post_id) {
+  $stmt = 'update "Posts" set approved=false, visible=false where id ='.$post_id;
+  $delete_post = pg_query($db_connection, $stmt);
 }
 
 //Author: Ully Martins
@@ -153,7 +167,7 @@ function create_comment($db_connection, $comment, $user_id, $post_id) {
 //Date modified:
 function flag_post($db_connection, $id) {
   //var_dump($id);  //dump on screen what is in $id
-  $flag = 'UPDATE "Posts" SET visible= false WHERE id = '.$id;
+  $flag = 'UPDATE "Posts" SET reported=true WHERE approved IS NULL AND id = '.$id;
   $flag_p = pg_query($db_connection, $flag);
 }
 

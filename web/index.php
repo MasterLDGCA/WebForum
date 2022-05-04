@@ -149,7 +149,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
                     left join (select cl.comment_id , count(cl.user_id) as likes
                     			from "CommentLikes" cl
                     			group by cl.comment_id ) as likes on likes.comment_id = c.id
-                    where c.visible = true and (p.approved = true or p.approved is null) and c.post_id = '.$post_row[5].'order by c.created_at';
+                    where c.visible = true and (c.approved = true or c.approved is null) and c.post_id = '.$post_row[5].'order by c.created_at';
           $comments = pg_query($db_connection, $stmt);
           ?>
 

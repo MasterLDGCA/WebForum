@@ -56,8 +56,6 @@ while($post = pg_fetch_row($check)) {
   $posts[$post[0]] = $post;
 }
 
-print_r($_POST);
-
 ?>
 <div class="content">
   <!-- Tab links -->
@@ -81,9 +79,8 @@ print_r($_POST);
          <th>Administrator</th>
          <th>Approved</th>
        </tr>
-       <?php
-       foreach($users as $user) {
-         $style = "";
+       <?php foreach($users as $user) : ?>
+         <?php $style = "";
 
          if ($user[6]==="t") {
            // Is an admin
@@ -97,14 +94,17 @@ print_r($_POST);
          if ($user[6]==="t" && $user[7]==="f") {
            $style = "style=\"background:pink; font-weight:bold; color:gray;\"";
          }
+         ?>
 
-         echo "<tr>";
-         echo " <td ".$style.">".$user[0]."</td>";
-         echo " <td ".$style.">".date('Y-m-d H:i:s',strtotime($user[1]))."</td>";
-         echo " <td ".$style.">".$user[2]."</td>";
-         echo " <td ".$style.">".$user[3]."</td>";
-         echo " <td ".$style.">".$user[4]."</td>";
+         <tr>
+           <td <?php echo $style; ?>><?php echo $user[0]; ?></td>
+           <td <?php echo $style; ?>><?php echo date('Y-m-d H:i:s',strtotime($user[1])); ?></td>
+           <td <?php echo $style; ?>><?php echo $user[2]; ?></td>
+           <td <?php echo $style; ?>><?php echo $user[3]; ?></td>
+           <td <?php echo $style; ?>><?php echo $user[4]; ?></td>
 
+
+         <?php
          if ($_SESSION["user_id"] === $user[0]) {
            // Meddling with your own admin status is not allowed
            echo ($user[6]==="t") ? " <td ".$style.">Yes</td>" : " <td ".$style.">No</td>";
@@ -136,11 +136,9 @@ print_r($_POST);
                                              </form>
                                              </td>";
          }
-
-         echo "</tr>";
-
-       }
        ?>
+       </tr>
+     <?php endforeach; ?>
      </table>
   </div>
 

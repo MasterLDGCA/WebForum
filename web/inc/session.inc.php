@@ -35,7 +35,7 @@ if( isset( $_SESSION['username'] ) ){ // Already logged in
       if ($result[3]==='t') $_SESSION['is_admin'] = true;
 
     } else {
-      $errors = "<div class=\"error_msg\">* Your account is still being reviewd. Please contact the administrator for furthur assistance.</div>\n";
+      $errors = "<div class=\"error_msg\">* Your account is still being reviewed. Please contact the administrator for furthur assistance.</div>\n";
     }
 
   } else {
@@ -43,6 +43,9 @@ if( isset( $_SESSION['username'] ) ){ // Already logged in
   }
 }
 
+//Author: Charith
+//Description: 
+//Date modified: 03/05/2022 by Jordan Junior
 function requireLogin(){
     global $loggedIn;
     global $errors;
@@ -54,17 +57,17 @@ function requireLogin(){
         <h1>Login to your account</h1>
         <form method="post" action="<?=$_SERVER['REQUEST_URI'];?>">
           <div class="form-group">
-            <input type="username" id="username" name="name" placeholder="Email" value="<?php echo ($_POST['name']) ? $_POST['name'] : "\" autofocus" ?>" required>
+            <input type="username" id="username" name="name" placeholder="Email" value="<?php echo (isset($_POST['name'])) ? $_POST['name'] : "\" autofocus" ?>" required>
           </div>
           <div class="form-group">
-            <input type="password" id="inputPassword" name="password" placeholder="Password" required <?php echo ($_POST['name']) ? autofocus : "" ?>>
+            <input type="password" id="inputPassword" name="password" placeholder="Password" required <?php echo (isset($_POST['name'])) ? autofocus : "" ?>>
           </div>
-          <button type="submit" class="btn btn-secondary">Login</button>
+          <button type="submit" class="loginRegisterButton">Login</button>
         </form>
         <p></p>
         <p>Or</p>
         <form method="get" action="/register.php">
-          <button type="submit" class="btn btn-secondary">Register</button>
+          <button type="submit" class="loginRegisterButton">Register</button>
         </form>
       </div>
     </div>

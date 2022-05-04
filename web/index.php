@@ -10,14 +10,9 @@ require 'inc/functions.inc.php';
 //Description: Function for create post
 //Date created: 29/04/2022
 //Date modified:
-  if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
-    create_post($db_connection, $_POST["title"], $_POST["content"], $userID);
-  }
-
-
 if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
-    create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
- }
+  create_post($db_connection, $_POST["title"], $_POST["content"], $userID);
+}
 
 if (!empty($_POST["post_like"])) {
   requireLogin();
@@ -27,6 +22,17 @@ if (!empty($_POST["post_like"])) {
 if (!empty($_POST["comment_like"])) {
   requireLogin();
   comment_like_clicked($db_connection, $_POST["comment_like"], $userID);
+}
+
+if (!empty($_POST["comment"])) {
+  requireLogin();
+  create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
+}
+
+//HAMISH
+if (!empty($_POST["post_report"])) {
+  requireLogin();
+  flag_post($db_connection, $_POST["post_report"]);
 }
 
 // Retrieve posts
@@ -65,6 +71,7 @@ $stmt_end = ' order by p.created_at desc';
 $posts = pg_query($db_connection, $stmt.$stmt_end);
 
 // print_r($_POST);
+
 
 ?>
 <div class="content">
@@ -121,8 +128,15 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             ?>
             <form method="POST" action="index.php">
               <input type="hidden" name="post_like" value="<?php echo $post_row[5];?>">
-              <button type="submit" class="like_button" <?php echo ($post_liked) ? " clicked" : ""; ?>><span class="glyphicon glyphicon-thumbs-up"></span><?php echo ($post_row[6]) ? $post_row[6] : "Like";?></button>
+              <button type="submit" class="like_button" <?php echo ($post_liked) ? " clicked" : ""; ?>><span class="glyphicon glyphicon-thumbs-up"></span> <?php echo ($post_row[6]) ? $post_row[6] : " Like";?></button>
             </form>
+
+            <!-- Hamish Sandys-Renton - Report Button with PHP 02/05/2022-->
+            <form method="POST" action="index.php">
+              <input type="hidden" name="post_report" value="<?php echo $post_row[5];?>">
+              <button type="submit" class="like_button" id="flag_button"><span class="glyphicon glyphicon-flag"></span></button>
+            </form>
+
           </div>
           </div>
           <div class="post_footer">
@@ -167,12 +181,11 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             </div>
             </div>
           <?php endwhile;?>
-
           <div class="comment_node">
-            <div class="comment_author"><?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : "<a href=\"/login.php\">Login/Register</a>"; ?></div>
-            <div class="comment_content"><input name="comment_content" placeholder="Add your commnent here"></div>
+            <div class="comment_author"><?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : "<a href=\"/login.php\">login</a>"; ?></div>
+            <div class="comment_content"><input name="comment_content" placeholder="Add your commnent here" value="<?php echo (isset($_POST['comment'])) ? autofocus : ""?>"></div>
             <div class="comment_date"><?php echo date('Y-m-d H:i:s') ?></div>
-            <div class="forum_button"><button class="like_button">Comment</button></div>
+            <div class="forum_button"><button type="submit" name="comment" class="like_button">Comment</button></div>
           </div>
         </div>
       <?php endwhile; ?>

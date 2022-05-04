@@ -19,6 +19,7 @@ function insert_user($db_connection, $fname, $lname, $email, $password) {
 
 // Author: Charith Akalanka
 // Description: Validate user data inserted on the register page
+// Date modified: 03/05/2022 by Jordan Junior
 function new_user_validation() {
   if (!empty($_POST["fname"])    && preg_match("/[^a-zA-Z]/", $_POST["fname"]))          $errors[] = "First name can only contain letters";
   if (!empty($_POST["lname"])    && preg_match("/[^a-zA-Z]/", $_POST["lname"]))          $errors[] = "Last name can only contain letters";
@@ -28,10 +29,12 @@ function new_user_validation() {
   if (!empty($_POST["password"]) && !preg_match('/[A-Z]/',$_POST["password"]))           $errors[] = "Password must contain UPPERCASE characters";
   if (!empty($_POST["password"]) && !preg_match('/[0-9]/',$_POST["password"]))           $errors[] = "Password must contain numbers";
   if (!empty($_POST["password"]) && !preg_match('/[\.\?\(\)@#\$%&\*]/',$_POST["password"])) $errors[] = "Password must contain \$pec!al (har@ctors";
-  if ($_POST["password"] != $_POST["password2"])                                         $errors[] = "The passwords do not match";
+  if (isset($_POST["password"]) && isset($_POST["password2"]) && $_POST["password"] != $_POST["password2"])  $errors[] = "The passwords do not match";
 
-  if ($errors) return $errors;
-  else return 0;
+  if (isset($errors))
+    return $errors;
+  else
+    return 0;
 }
 
 // Author: Charith Akalanka
@@ -135,13 +138,26 @@ function create_post($db_connection, $title, $content, $user_id) {
 //Description: Function for create comment
 //Date created: 29/04/2022
 //Date modified:
-  function create_comment($db_connection, $comment, $user_id, $post_id) {
-    //create new post
-    $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';
+function create_comment($db_connection, $comment, $user_id, $post_id) {
+  //create a comment
+  $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';
 
-    $create_post = pg_query($db_connection, $stmt);
-    //if (!$result) echo "<div class=\"error_msg\">Account creation failed. Please contact the administrators</div>";
+  $create_comment = pg_query($db_connection, $stmt);
+  if (!$create_comment) echo "<div class=\"error_msg\">Failed to comment</div>";
+}
 
+
+//Author: Hamish Sandys-Renton
+//Description:Flag/Report Post Function
+//Date created: 29/04/2022
+//Date modified:
+  function flag_post($db_connection, $id) {
+    //var_dump($id);  //dump on screen what is in $id
+    $flag = 'UPDATE "Posts" SET visible=false, approved=false WHERE id = '.$id;
+    $flag_p = pg_query($db_connection, $flag);
+    if (!$flag_p) echo "<div class=\"error_msg\">Flaggin failed</div>";
   }
+
+
 
 ?>

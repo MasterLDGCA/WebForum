@@ -45,21 +45,21 @@ body{
 }
 
 .header {
-  display: flex;
+  display: block;
   justify-content: space-between;
 
 }
 
 .navbar {
-display: flex;
+  text-align: center;
+  margin: auto;
+  display:flex;
+  justify-content: space-between;
   list-style-type: none;
-  justify-content: center;
-  flex-wrap: wrap;
- background-color:rgba(153,170,181,255);
- border: rgba(240,240,240,255);
- width:100%;
 
- padding:10px;
+  background-color:rgba(153,170,181,255);
+  
+  padding:20px;
 }
 .navbar-brand{
   border-radius: 10px;
@@ -75,11 +75,10 @@ display: flex;
 
 }
 .nav-item {
-
+  display: inline-block;
   background-color:rgba(114,137,218,255);
   border-radius: 10px;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  color: pink;
   font-size: 1.2em;
   transition-duration: 0.6s;
 }
@@ -91,12 +90,24 @@ display: flex;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
+.loginRegisterButton {
+  background-color:rgba(114,137,218,255);
+  border-radius: 10px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  font-size: 1.2em;
+  transition-duration: 0.6s;
+}
+.loginRegisterButton:hover {
+  background-color: rgba(255,192,0,255);
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
 .form-box {
   width: 300px;
   margin: auto;
   padding: 5px 5px;
-  border-radius: 20px;
-
+  border-radius: 20px; 
+  background: #d3d3d3;
   margin-top: 100px;
   text-align: center;
 }
@@ -120,12 +131,13 @@ display: flex;
 .post_title {
   font-weight: bold;
   font-size: 20px;
+  text-shadow: 0.5px 0.5px #ffc000;
 }
 
 .post_content {
   margin-bottom: 5px;
   padding: 0px 10px;
-
+  
   display: flex;
   justify-content: space-between;
   background-color: lightyellow;
@@ -142,6 +154,7 @@ display: flex;
 .post_img {
 	height:2em;
 	width:2em;
+  
 }
 
 .comment_node {
@@ -156,6 +169,16 @@ display: flex;
 
 .comment_author {
   font-weight: bold;
+  text-align: left;
+  color: black;
+}
+
+.comment_author a {
+  font-weight: bold;
+  text-align: left;
+  color: grey;
+  
+  
 }
 
 .comment_content {

@@ -143,6 +143,9 @@ function delete_post($db_connection, $post_id) {
 //Date modified:
 function create_post($db_connection, $title, $content, $user_id) {
   //create new post
+  //Hamish Sandys-Renton: Adding embed video to create post function
+
+    $content = preg_replace("/\s*[a-zA-Z]*:\/\/www\.youtube.com\/watch\?v=([a-zA-Z0-9\-]+)([a-zA-Z0-9\/\*\-\\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",$content);
   $stmt = 'insert into "Posts" (user_id, title, content) values (\''.$user_id.'\',\''.$title.'\',\''.$content.'\')';
   $create_post = pg_query($db_connection, $stmt);
   if (!$create_post) echo "<div class=\"error_msg\">Post creation failed</div>";

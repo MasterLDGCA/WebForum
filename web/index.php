@@ -24,9 +24,13 @@ if (!empty($_POST["comment_like"])) {
   comment_like_clicked($db_connection, $_POST["comment_like"], $userID);
 }
 
-if (!empty($_POST["comment"])) {
+//Author: Ully Martins
+//Description: Function for create a comment
+//Date created: 06/05/2022
+//Date modified:
+if (!empty($_POST["comment_content"])) {
   requireLogin();
-  create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
+  create_comment($db_connection, $_POST["post_id"], $_POST["comment_content"], $userID);
 }
 
 //HAMISH
@@ -69,7 +73,7 @@ $stmt_end = ' order by p.created_at desc';
 
 $posts = pg_query($db_connection, $stmt.$stmt_end);
 
-// print_r($_POST);
+ //print_r($_POST);
 
 ?>
 
@@ -169,7 +173,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             ?>
 
             <div class="comment_node">
-            <div class="comment_author">"<?php echo $comment_row[0]." ".$comment_row[1]; ?></div>
+            <div class="comment_author"><?php echo $comment_row[0]." ".$comment_row[1]; ?></div>
             <div class="comment_content"><?php echo $comment_row[2] ?></div>
             <div class="comment_date"><?php echo date('Y-m-d H:i:s',strtotime($comment_row[3])) ?></div>
             <div class="forum_button">
@@ -180,20 +184,17 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             </div>
             </div>
           <?php endwhile;?>
+          <form method="POST" action="index.php">
           <div class="comment_node">
             <div class="comment_author"><?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : "<a href=\"/login.php\">login</a>"; ?></div>
-            <div class="comment_content"><input name="comment_content" placeholder="Add your commnent here" value="<?php echo (isset($_POST['comment'])) ? autofocus : ""?>"></div>
+            <div class="comment_content"><input name="comment_content" placeholder="Add your comment here" ></div>
             <div class="comment_date"><?php echo date('Y-m-d H:i:s') ?></div>
             <div class="forum_button">
-                <button type="submit" class="like_button">Comment</button>
+              <input type="hidden" name="post_id" value="<?php echo $post_row[5]; ?>">
+              <button type="submit" class="comment_button"> Comment</button>
             </div>
-              <?php
-               if (!empty($_POST["comment"])) {
-                  echo("potato");
-                  create_comment($db_connection, $_POST["post_id"], $_POST["comment"], $userID);
-                }
-              ?>
           </div>
+          </form>
         </div>
       <?php endwhile; ?>
     </div>

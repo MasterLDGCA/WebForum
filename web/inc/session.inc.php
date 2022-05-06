@@ -1,6 +1,7 @@
 <?php
 // Author: Charith Akalanka
 // Description: Establishing a session on user login
+// Date Modified: 06/05/2022 by Jordan Junior
 
 if( session_status() == PHP_SESSION_NONE ) session_start();
 
@@ -22,9 +23,8 @@ if( isset( $_SESSION['username'] ) ){ // Already logged in
   $stmt = "select first_name, last_name, pass_hash, is_admin, id, approved from \"Users\" u where email = '".$username."'";
   $check = pg_query($db_connection, $stmt);
   $result = pg_fetch_row($check);
-  // print_r($result);
 
-  if(password_verify($password, $result[2])) {
+  if($result && password_verify($password, $result[2])) {
     if ($result[5] === 't' || $result[3] === 't') {
       // Is an approved user or an admin
       $loggedIn = true;
@@ -57,10 +57,10 @@ function requireLogin(){
         <h1>Login to your account</h1>
         <form method="post" action="<?=$_SERVER['REQUEST_URI'];?>">
           <div class="form-group">
-            <input type="username" id="username" name="name" placeholder="Email" value="<?php echo (isset($_POST['name'])) ? $_POST['name'] : "\" autofocus" ?>" required>
+            <input type="email" id="username" name="name" placeholder="Email" value="<?php echo (isset($_POST['name'])) ? $_POST['name'] : "\" autofocus" ?>" required>
           </div>
           <div class="form-group">
-            <input type="password" id="inputPassword" name="password" placeholder="Password" required <?php echo (isset($_POST['name'])) ? autofocus : "" ?>>
+            <input type="password" id="inputPassword" name="password" placeholder="Password" required <?php echo (isset($_POST['name'])) ? "autofocus" : "" ?>>
           </div>
           <button type="submit" class="loginRegisterButton">Login</button>
         </form>

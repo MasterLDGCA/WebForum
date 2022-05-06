@@ -25,6 +25,7 @@ $errors = null;
       	 	 }
     	  }
    	 ?>
+		
 	<form method="post" action="index.php">
 	<label for="subjects">Subject of your discussion posts</label>
 	<select name="subjects" id="subjects"  >

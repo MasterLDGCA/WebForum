@@ -152,7 +152,7 @@ function create_post($db_connection, $title, $content, $user_id) {
 //Description: Function for create comment
 //Date created: 29/04/2022
 //Date modified:
-function create_comment($db_connection, $comment, $user_id, $post_id) {
+function create_comment($db_connection, $post_id, $comment, $user_id ) {
   //create a comment
   $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';
 

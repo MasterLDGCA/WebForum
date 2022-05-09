@@ -76,6 +76,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
  //print_r($_POST);
 
 ?>
+
 <div class="content">
   <div class="view">
     <div class="post_box">

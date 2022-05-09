@@ -34,6 +34,11 @@
   color: black !important;
 }
 
+body{
+	background-color:rgba(114,137,218,255);
+	text-align:center;
+}
+
 .form-box {
   width: 300px;
   margin: auto;
@@ -61,12 +66,12 @@
 
 .search_box {
   padding: 15px;
-  border: 1px solid white;
+  border: 1px solid grey;
   border-radius: 10px;
   width: 95% !important;
   margin: auto;
   margin-bottom: 10px;
-  background: blue;
+  background: #ffc000;
 }
 
 .post_box {

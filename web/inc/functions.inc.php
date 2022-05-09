@@ -141,14 +141,20 @@ function delete_post($db_connection, $post_id) {
 //Description: Function for create post
 //Date created: 29/04/2022
 //Date modified:
-function create_post($db_connection, $title, $content, $user_id) {
+function create_post($db_connection, $title, $content, $user_id, $post_id) {
   //create new post
   //Hamish Sandys-Renton: Adding embed video to create post function
 
     $content = preg_replace("/\s*[a-zA-Z]*:\/\/www\.youtube.com\/watch\?v=([a-zA-Z0-9\-]+)([a-zA-Z0-9\/\*\-\\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",$content);
   $stmt = 'insert into "Posts" (user_id, title, content) values (\''.$user_id.'\',\''.$title.'\',\''.$content.'\')';
-  $create_post = pg_query($db_connection, $stmt);
-  if (!$create_post) echo "<div class=\"error_msg\">Post creation failed</div>";
+  //$stmu = 'insert into "PostSubject" (post_id, subj_id) values (\''.$post_id.'\',\''.$subj_id.'\')'; 
+
+   $create_post = pg_query($db_connection, $stmt);
+  //$create_subject = pg_query($db_connection, $stmu);
+  
+   if (!$create_post) echo "<div class=\"error_msg\">Post creation failed</div>";
+ // if (!$create_subject) echo "<div class=\"error_msg\">Post creation failed/div>";
+
 }
 
 //Author: Ully Martins
@@ -159,14 +165,8 @@ function create_post($db_connection, $title, $content, $user_id) {
   //add subjects
 function create_comment($db_connection, $post_id, $comment, $user_id) {
   //create a comment
-  $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';
-
- // $stmu = 'insert into "PostSubject" (post_id, subj_id) values (\''.$post_id.'\',\''.$subj_id.'\')';
-  
+  $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';  
   $create_comment = pg_query($db_connection, $stmt);
-
-  //$create_subject = pg_query($db_connection, $stmu);
-
   if (!$create_comment) echo "<div class=\"error_msg\">Failed to comment</div>";
 
 }

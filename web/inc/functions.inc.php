@@ -152,12 +152,20 @@ function create_post($db_connection, $title, $content, $user_id) {
 //Description: Function for create comment
 //Date created: 29/04/2022
 //Date modified:
-function create_comment($db_connection, $post_id, $comment, $user_id ) {
+
+  //add subjects
+function create_comment($db_connection, $post_id, $comment, $user_id) {
   //create a comment
   $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';
 
+ // $stmu = 'insert into "PostSubject" (post_id, subj_id) values (\''.$post_id.'\',\''.$subj_id.'\')';
+  
   $create_comment = pg_query($db_connection, $stmt);
+
+  //$create_subject = pg_query($db_connection, $stmu);
+
   if (!$create_comment) echo "<div class=\"error_msg\">Failed to comment</div>";
+
 }
 
 

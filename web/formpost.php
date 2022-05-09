@@ -15,6 +15,7 @@ requireLogin();
 
 $errors = null;
 
+ //print_r($_POST);
 
 ?>
 <div class="content">
@@ -25,10 +26,10 @@ $errors = null;
       	 	 }
     	  }
    	 ?>
-		
+
 	<form method="post" action="index.php">
 	<label for="subjects">Subject of your discussion posts</label>
-	<select name="subjects" id="subjects"  >
+	<select name="subjects" id="subjects" required = "required" >
 	<?php
 		$stmt = 'select * from "Subjects"';
 		 $sql = pg_query($db_connection, $stmt);

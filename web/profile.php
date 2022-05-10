@@ -1,7 +1,7 @@
 <?php
 // Author: Charith Akalanka
 // Description: User profile management page
-// Date modified: 10/05/2022 by Jordan Junior
+// Date modified: 03/05/2022 by Jordan Junior
 
 define( 'PAGE', 'Home' );
 define( 'PAGE_TITLE', 'Home');
@@ -22,6 +22,9 @@ if ($result) {
 }
 
 
+// Author: Jordan Junior
+// Description: Update profile information
+// Date Created: 10/05/2022
 $fname = isset($_POST['fname']) ? $_POST['fname'] : "";
 $lname = isset($_POST['lname']) ? $_POST['lname'] : "";
 $password = isset($_POST['password']) ? $_POST['password'] : "";

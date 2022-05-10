@@ -33,7 +33,9 @@ if (!empty($_POST["comment_content"])) {
   create_comment($db_connection, $_POST["post_id"], $_POST["comment_content"], $userID);
 }
 
-//HAMISH
+//HAMISH Sandys-Renton
+//Call flag post function to report an inapropriate post
+//Date created: 02/05/2022
 if (!empty($_POST["post_report"])) {
   requireLogin();
   flag_post($db_connection, $_POST["post_report"]);
@@ -134,7 +136,9 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
               <button type="submit" class="like_button<?php echo ($post_liked) ? " clicked" : ""; ?>" ><span class="glyphicon glyphicon-thumbs-up"></span> <?php echo ($post_row[6]) ? $post_row[6] : " Like";?></button>
             </form>
 
-            <!-- Hamish Sandys-Renton - Report Button with PHP 02/05/2022-->
+            <!-- Hamish Sandys-Renton - Report Button with PHP 02/05/2022
+            Date Created: 01/05/2022
+            -->
             <form method="POST" action="index.php">
               <input type="hidden" name="post_report" value="<?php echo $post_row[5];?>">
               <button type="submit" class="like_button" id="flag_button"><span class="glyphicon glyphicon-flag"></span></button>

@@ -204,6 +204,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
     </div>
     <div class="leader_box">
       <div class="leaderboard_top">
+        <p id="cancan"></p>
         <div class="leader_box_title">
           <img src="images/trophy.png" alt="trophy">
           <h2>Leaderboard - This week</h2>
@@ -236,7 +237,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
           <?php while ($alltime_leader_row = pg_fetch_row($alltime_leaders)) :?>
             <?php if ($alltime_leader_row[4]<1) continue; ?>
             <tr>
-              <td><?php echo $alltime_leader_row[0] ?></td>
+              <td id="leaderb"><?php echo $alltime_leader_row[0] ?></td>
               <td><?php echo $alltime_leader_row[2] ?></td>
               <td><?php echo $alltime_leader_row[3] ?></td>
               <td><?php echo $alltime_leader_row[4] ?></td>

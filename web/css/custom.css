@@ -8,12 +8,11 @@ BLACK rgba(35,39,42,255)
 
 
 
-#cancan {
-
-
-	background-color:rgba(114,137,218,255);
-
+/*Round edges of the P5 sketch*/
+canvas {
+  border-radius: 22px;
 }
+
 
 
 .menu_title {

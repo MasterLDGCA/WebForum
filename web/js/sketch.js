@@ -1,4 +1,4 @@
-let message = 'EduGame                                    The Educational Forum of  the Future!';
+let message = '';
 let messageX;
 const xSpeed = 0.67;
 const ySpeed = 0.05;
@@ -12,7 +12,7 @@ let font = 'arial';
 function setup() {
   message = document.getElementById('leader_all_time').value;
   console.log(message);
-  var myCanvas = createCanvas(100, 100);
+  var myCanvas = createCanvas(300, 100);
   myCanvas.parent("cancan");
   textFont(font);
   messageX = width;

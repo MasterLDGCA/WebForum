@@ -235,6 +235,9 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             $alltime_leaders = pg_query($db_connection, $stmt);
             $alltime_leader = pg_fetch_result($alltime_leaders, 0, 0);
           ?>
+          <!--Author: Hamish Sandys-Renton
+           Date Created: 10/05/2022
+           Description: Below Saving weekly leader value saving in php variable to use in the P5 Sketch-->
           <input type="hidden" id="leader_all_time" value="<?php echo $alltime_leader ?>">
           <?php while ($alltime_leader_row = pg_fetch_row($alltime_leaders)) :?>
             <?php if ($alltime_leader_row[4]<1) continue; ?>

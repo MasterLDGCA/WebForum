@@ -37,6 +37,44 @@ function new_user_validation() {
     return 0;
 }
 
+// Author: Jordan Junior
+// Description: Update user information from the profile page
+// Date created: 10/05/2022
+function update_user($db_connection, $fname, $lname, $password, $user_id){
+  if($password != ""){
+    $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+    $query = "update \"Users\" set first_name='".$fname."', last_name='".$lname."', pass_hash='".$pass_hash."' where id=".$user_id;
+  } else {
+    $query = "update \"Users\" set first_name='".$fname."', last_name='".$lname."' where id=".$user_id;
+  }
+
+  $result = pg_query($db_connection, $query );
+  if (!$result) echo "<div class=\"error_msg\">Error updating profile. Please contact the administrators</div>";
+  else {
+    $_SESSION['username'] = $fname." ".$lname;
+    header( 'location: /profile.php' );
+    exit();
+  }
+}
+
+// Author: Jordan Junior
+// Description: Validate user information being updated
+// Date created: 10/05/2022
+function update_user_validation($fname, $lname, $password){
+  if (!empty($fname) && preg_match("/[^a-zA-Z]/", $fname))          $errors[] = "First name can only contain letters";
+  if (!empty($lname) && preg_match("/[^a-zA-Z]/", $lname))          $errors[] = "Last name can only contain letters";
+  if (!empty($password) && strlen($password) < 8)                      $errors[] = "Password must contain 8 or more characters";
+  if (!empty($password) && !preg_match('/[a-z]/',$password))           $errors[] = "Password must contain lowercase characters";
+  if (!empty($password) && !preg_match('/[A-Z]/',$password))           $errors[] = "Password must contain UPPERCASE characters";
+  if (!empty($password) && !preg_match('/[0-9]/',$password))           $errors[] = "Password must contain numbers";
+  if (!empty($password) && !preg_match('/[\.\?\(\)@#\$%&\*]/',$password)) $errors[] = "Password must contain \$pec!al (har@ctors";
+
+  if (isset($errors))
+    return $errors;
+  else
+    return 0;
+}
+
 // Author: Charith Akalanka
 // Description: Record a click on the post like button
 function post_like_clicked( $db_connection, $post_id, $user_id ) {

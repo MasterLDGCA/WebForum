@@ -233,7 +233,9 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
                       order by score desc';
 
             $alltime_leaders = pg_query($db_connection, $stmt);
+            $alltime_leader = pg_fetch_result($alltime_leaders, 0, 0);
           ?>
+          <input type="hidden" id="leader_all_time" value="<?php echo $alltime_leader ?>">
           <?php while ($alltime_leader_row = pg_fetch_row($alltime_leaders)) :?>
             <?php if ($alltime_leader_row[4]<1) continue; ?>
             <tr>

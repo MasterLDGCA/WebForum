@@ -11,7 +11,7 @@ require 'inc/functions.inc.php';
 //Date created: 29/04/2022
 //Date modified:
 if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
-  create_post($db_connection, $_POST["title"], $_POST["content"], $userID, $_POST["post_id"]);
+  create_post($db_connection, $_POST["title"], $_POST["content"], $userID);
 }
 
 if (!empty($_POST["post_like"])) {
@@ -109,6 +109,8 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             $stmt = 'select s.title from "PostSubject" ps
                       left join "Subjects" s on ps.subj_id = s.id
                       where post_id ='.$post_row[5];
+                      //'and subj_id =' .$post_row[6]; //changed here
+
 
             $tags = pg_query($db_connection, $stmt);
 
@@ -195,6 +197,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             <div class="comment_date"><?php echo date('Y-m-d H:i:s') ?></div>
             <div class="forum_button">
               <input type="hidden" name="post_id" value="<?php echo $post_row[5]; ?>">
+              <input type="hidden" name="subj_id" value="<?php echo $post_row[5]; ?>">
               <button type="submit" class="comment_button"> Comment</button>
             </div>
           </div>

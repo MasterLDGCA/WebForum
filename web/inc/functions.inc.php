@@ -59,7 +59,7 @@ function update_user($db_connection, $fname, $lname, $password, $user_id){
 
 // Author: Jordan Junior
 // Description: Validate user information being updated
-// Date created: 10/05/2022
+// Date created: 10/05/2022 changed
 function update_user_validation($fname, $lname, $password){
   if (!empty($fname) && preg_match("/[^a-zA-Z]/", $fname))          $errors[] = "First name can only contain letters";
   if (!empty($lname) && preg_match("/[^a-zA-Z]/", $lname))          $errors[] = "Last name can only contain letters";
@@ -178,8 +178,7 @@ function delete_post($db_connection, $post_id) {
 //Author: Ully Martins
 //Description: Function for create post
 //Date created: 29/04/2022
-//Date modified:
-function create_post($db_connection, $title, $content, $user_id, $post_id) {
+function create_post($db_connection, $title, $content, $user_id) {
   //create new post
 
   //Hamish Sandys-Renton:
@@ -187,23 +186,23 @@ function create_post($db_connection, $title, $content, $user_id, $post_id) {
   //Date Created 05/05/2022
   //Date Modified 06/05/2022
     $content = preg_replace("/\s*[a-zA-Z]*:\/\/www\.youtube.com\/watch\?v=([a-zA-Z0-9\-]+)([a-zA-Z0-9\/\*\-\\-\_\?\&\;\%\=\.]*)/i","<iframe width=\"420\" height=\"315\" src=\"//www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen></iframe>",$content);
-  $stmt = 'insert into "Posts" (user_id, title, content) values (\''.$user_id.'\',\''.$title.'\',\''.$content.'\')';
-  //$stmu = 'insert into "PostSubject" (post_id, subj_id) values (\''.$post_id.'\',\''.$subj_id.'\')'; 
+  $stmt = 'insert into "Posts" (user_id, title, content) values (\''.$user_id.'\',\''.$title.'\',\''.$content.'\')'; 
+  $create_post = pg_query($db_connection, $stmt);
+  
+  $potato = pg_fetch_row($create_post);
+  var_dump($potato);
 
-   $create_post = pg_query($db_connection, $stmt);
+  //$stmu = 'insert into "PostSubject" (post_id, subj_id) values (\''.$post_id.'\',\''.$subj_id.'\')';
   //$create_subject = pg_query($db_connection, $stmu);
   
    if (!$create_post) echo "<div class=\"error_msg\">Post creation failed</div>";
- // if (!$create_subject) echo "<div class=\"error_msg\">Post creation failed/div>";
+   //if (!$create_subject) echo "<div class=\"error_msg\">Post creation failed/div>";
 
 }
 
 //Author: Ully Martins
 //Description: Function for create comment
 //Date created: 29/04/2022
-//Date modified:
-
-  //add subjects
 function create_comment($db_connection, $post_id, $comment, $user_id) {
   //create a comment
   $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';  

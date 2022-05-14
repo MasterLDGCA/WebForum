@@ -198,7 +198,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             <div class="forum_button">
               <input type="hidden" name="post_id" value="<?php echo $post_row[5]; ?>">
               <input type="hidden" name="subj_id" value="<?php echo $post_row[5]; ?>">
-              <button type="submit" class="comment_button"> Comment</button>
+              <button type="submit" class="like_button"> Comment</button>
             </div>
           </div>
           </form>

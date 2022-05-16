@@ -233,7 +233,8 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
                       		group by author) as comment_likes
                       on post_likes.author = comment_likes.author
                       left join "Users" u2 on u2.id = post_likes.author
-                      order by score desc';
+                      order by score desc
+                      limit 5';
 
             $alltime_leaders = pg_query($db_connection, $stmt);
             $alltime_leader = pg_fetch_result($alltime_leaders, 0, 0);
@@ -279,7 +280,8 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
                       		group by author) as comment_likes
                       on post_likes.author = comment_likes.author
                       left join "Users" u2 on u2.id = post_likes.author
-                      order by score desc';
+                      order by score desc
+                      limit 10';
 
             $alltime_leaders = pg_query($db_connection, $stmt);
           ?>

@@ -192,7 +192,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
           <?php endwhile;?>
           <form method="POST" action="index.php">
           <div class="comment_node">
-            <div class="comment_author"><?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : "<a href=\"/login.php\">login</a>"; ?></div>
+            <div class="comment_author"><?php echo (isset($_SESSION['username'])) ? $_SESSION['username'] : "<a class=\"loginRegisterButton\" href=\"/login.php\">login</a>"; ?></div>
             <div class="comment_content"><input name="comment_content" placeholder="Add your comment here" ></div>
             <div class="comment_date"><?php echo date('Y-m-d H:i:s') ?></div>
             <div class="forum_button">

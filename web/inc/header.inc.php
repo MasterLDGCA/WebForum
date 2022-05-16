@@ -15,6 +15,7 @@ require 'inc/session.inc.php';
   		<script src="js/bootstrap.js"></script>
   		<script src="js/p5.js"></script>
       <script src="js/sketch.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
     <div class="header">
@@ -22,7 +23,7 @@ require 'inc/session.inc.php';
         <a href="/"><img src="images/logo.png" alt="EduGame"></a>
       </div>
       <div>
-  		
+
   		</div>
       <div class="menu">
         <ul class="nav-list">

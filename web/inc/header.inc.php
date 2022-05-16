@@ -11,7 +11,6 @@ require 'inc/session.inc.php';
       <link rel="shortcut icon" href="images/trophy.png" />
       <link rel="stylesheet" href="css/main.css">
       <link rel="stylesheet" href="css/bootstrap.css" />
-  		<link rel="stylesheet" href="css/custom.css" />
   		<script src="js/bootstrap.js"></script>
   		<script src="js/p5.js"></script>
       <script src="js/sketch.js"></script>

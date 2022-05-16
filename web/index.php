@@ -41,40 +41,6 @@ if (!empty($_POST["post_report"])) {
   flag_post($db_connection, $_POST["post_report"]);
 }
 
-// Retrieve posts
-$stmt = ' select p.title , p.content , u.first_name , u.last_name, p.created_at , p.id , likes
-          from "Posts" p
-          left join "Users" u ON p.user_id = u.id
-          left join (	select pl.post_id , count(pl.user_id) as likes
-          			from "PostLikes" pl
-          			group by pl.post_id ) as likes on likes.post_id = p.id
-          left join "PostSubject" ps on ps.post_id = p.id
-          left join "Subjects" s on s.id = ps.subj_id
-          where p.visible = true and (p.approved is null or p.approved = true)';
-
-if (isset($_POST["search-button"])) {
-  // Search button clicked
-  if (isset($_POST["subject"]) && preg_match("/^\d+$/",$_POST["subject"])) {
-    // A subject is selected
-    $stmt .= ' and s.id ='.$_POST["subject"];
-  } else {
-    // Invalid subject code
-    unset($_POST["subject"]);
-  }
-
-  if (isset($_POST["date"]) && preg_match("/^\d{4}-\d{2}-\d{2}$/",$_POST["date"])) {
-    // A date is selected
-    $stmt .= " and CAST(p.created_at as DATE) = '{$_POST["date"]}'";
-  } else {
-    // invalid date
-    unset($_POST["date"]);
-  }
-}
-
-$stmt_end = ' order by p.created_at desc limit 5';
-
-$posts = pg_query($db_connection, $stmt.$stmt_end);
-
 ?>
 <div class="content">
   <div class="view">

@@ -109,6 +109,13 @@ body{
   background: #ffc000;
 }
 
+.search_box input,select {
+  height: 25px;
+  border-radius: 0px;
+  border: 1px solid lightgray;
+  background: white;
+}
+
 .post_box {
   width: 75%;
 }

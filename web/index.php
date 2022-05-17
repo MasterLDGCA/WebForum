@@ -6,6 +6,8 @@ require 'inc/header.inc.php';
 require 'inc/functions.inc.php';
 // requireLogin();
 
+$errors = [];
+
 //Author: Ully Martins
 //Description: Function for create post
 //Date created: 29/04/2022
@@ -41,13 +43,32 @@ if (!empty($_POST["post_report"])) {
   flag_post($db_connection, $_POST["post_report"]);
 }
 
+if (isset($_POST["clear-button"])) {
+  unset($_POST["search-button"]);
+  unset($_POST["subject"]);
+  unset($_POST["date"]);
+  unset($_POST["searchTerm"]);
+}
+
+if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTerm"])) {
+  unset($_POST["searchTerm"]);
+  $errors[] = "Invalid characters found in search term";
+}
+
 ?>
 <div class="content">
   <div class="view">
     <div class="post_box">
+      <?php if ($errors) : ?>
+        <div class="error_msg">
+          <?php foreach($errors as $error) : ?>
+            <div class="error"><?php echo "* ".$error ?></div>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
       <div class="search_box">
         <form class="" action="index.php" method="post">
-          <input type="text" name="searchTerm" placeholder="Enter a search phrase" value="">
+          <input type="text" name="searchTerm" placeholder="Enter a search phrase" value="<?php echo isset($_POST["searchTerm"]) ? $_POST["searchTerm"] : "" ?>">
           <select class="" name="subject">
             <option value="all">All</option>
             <?php
@@ -60,6 +81,9 @@ if (!empty($_POST["post_report"])) {
           </select>
           <input type="date" name="date" value="<?php echo (isset($_POST["date"]) ? $_POST["date"] : "none") ?>">
           <button type="submit" name="search-button" value="1">Search</button>
+          <?php if (isset($_POST["search-button"])) : ?>
+            <button type="submit" name="clear-button">Clear</button>
+          <?php endif; ?>
         </form>
       </div>
       <div id="post_view" class="post_view"></div>
@@ -79,7 +103,8 @@ if (!empty($_POST["post_report"])) {
         data: { offset: offset,
                 limit: limit<?php
                 echo (isset($_POST["subject"])) ? ", subject: '{$_POST["subject"]}'\n" : "";
-                echo (isset($_POST["date"])) ? ", date: '{$_POST["date"]}'\n" : "";?>},
+                echo (isset($_POST["date"])) ? ", date: '{$_POST["date"]}'\n" : "";
+                echo (isset($_POST["searchTerm"])) ? ", searchTerm: '{$_POST["searchTerm"]}'\n" : "";?>},
         success: function(data){
             if(data != ''){
                 $('#post_view').append(data);
@@ -103,7 +128,8 @@ if (!empty($_POST["post_report"])) {
               data: { offset: offset,
                       limit: limit<?php
                       echo (isset($_POST["subject"])) ? ", subject: '{$_POST["subject"]}'\n" : "";
-                      echo (isset($_POST["date"])) ? ", date: '{$_POST["date"]}'\n" : "";?>},
+                      echo (isset($_POST["date"])) ? ", date: '{$_POST["date"]}'\n" : "";
+                      echo (isset($_POST["searchTerm"])) ? ", searchTerm: '{$_POST["searchTerm"]}'\n" : "";?>},
               success: function(data){
                   if(data != ''){
                       $('#post_view').append(data);

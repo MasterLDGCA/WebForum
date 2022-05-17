@@ -1,5 +1,6 @@
 <?php
 require 'inc/postgresql.inc.php';
+require 'inc/functions.inc.php';
 
 // echo("<script>console.log('_POST: " . json_encode($_POST) . "');</script>");
 
@@ -25,12 +26,14 @@ $stmt = ' select p.title , p.content , u.first_name , u.last_name, p.created_at 
           left join "Subjects" s on s.id = ps.subj_id
           where p.visible = true and (p.approved is null or p.approved = true)';
 
+
 if (isset($_POST["subject"]) && preg_match("/^\d+$/",$_POST["subject"])) {
   // A subject is selected
   $stmt .= ' and s.id ='.$_POST["subject"];
 } else {
   // Invalid subject code
   unset($_POST["subject"]);
+  // $errors[] = "Invalid subject selected";
 }
 
 if (isset($_POST["date"]) && preg_match("/^\d{4}-\d{2}-\d{2}$/",$_POST["date"])) {
@@ -39,6 +42,15 @@ if (isset($_POST["date"]) && preg_match("/^\d{4}-\d{2}-\d{2}$/",$_POST["date"]))
 } else {
   // invalid date
   unset($_POST["date"]);
+  // $errors[] = "Invalid search date provided";
+}
+
+if (isset($_POST["searchTerm"]) && !preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTerm"])) {
+  $stmt .= " and ( to_tsvector(p.\"content\") @@ to_tsquery('{$_POST["searchTerm"]}')
+             or to_tsvector(p.\"title\") @@ to_tsquery('{$_POST["searchTerm"]}') )";
+} else {
+  unset($_POST["searchTerm"]);
+  $errors[] = "Invalid characters found in search term";
 }
 
 $stmt_end = ' order by p.created_at desc limit '.$limit;
@@ -50,7 +62,7 @@ while ($post_row = pg_fetch_row($posts)) : ?>
 
     <div class="post_node">
     <div class="post_title_node">
-    <img class="post_img" src="images/die.png" alt=""><div class="post_title"><?php echo $post_row[0]; ?></div>
+    <img class="post_img" src="images/die.png" alt=""><div class="post_title"><?php echo (isset($_POST["searchTerm"])) ? highlight_text($_POST["searchTerm"],$post_row[0]) : $post_row[0]; ?></div>
     <div class="post_tags">
     <?php
       // Retrieve tags
@@ -67,8 +79,9 @@ while ($post_row = pg_fetch_row($posts)) : ?>
     <?php endwhile; ?>
     </div>
     </div>
-    <div class="post_content"><?php echo $post_row[1]; ?>
-    <div class="forum_button">
+    <div class="post_content">
+      <div class="post_content_text"><?php echo (isset($_POST["searchTerm"])) ? highlight_text($_POST["searchTerm"],$post_row[1]) : $post_row[1]; ?></div>
+      <div class="forum_button">
       <?php
         // Has the user liked this post?
         $post_liked = false;

@@ -45,7 +45,7 @@ if (isset($_POST["date"]) && preg_match("/^\d{4}-\d{2}-\d{2}$/",$_POST["date"]))
   // $errors[] = "Invalid search date provided";
 }
 
-if (isset($_POST["searchTerm"]) && !preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTerm"])) {
+if (isset($_POST["searchTerm"]) && strlen($_POST["searchTerm"])>0 && !preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTerm"])) {
   $stmt .= " and ( to_tsvector(p.\"content\") @@ to_tsquery('{$_POST["searchTerm"]}')
              or to_tsvector(p.\"title\") @@ to_tsquery('{$_POST["searchTerm"]}') )";
 } else {

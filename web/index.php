@@ -54,6 +54,13 @@ $stmt = ' select p.title , p.content , u.first_name , u.last_name, p.created_at 
           left join "Subjects" s on s.id = ps.subj_id
           where p.visible = true and (p.approved is null or p.approved = true)';
 
+if (isset($_POST["clear-button"])) {
+  unset($_POST["search-button"]);
+  unset($_POST["subject"]);
+  unset($_POST["date"]);
+  unset($_POST["searchTerm"]);
+}
+
 if (isset($_POST["search-button"])) {
   // Search button clicked
   if (isset($_POST["subject"]) && preg_match("/^\d+$/",$_POST["subject"])) {
@@ -87,7 +94,7 @@ $stmt_end = ' order by p.created_at desc';
 
 $posts = pg_query($db_connection, $stmt.$stmt_end);
 
-print_r($_POST);
+// print_r($_POST);
 ?>
 <div class="content">
   <div class="view">
@@ -114,6 +121,9 @@ print_r($_POST);
           </select>
           <input type="date" name="date" value="<?php echo (isset($_POST["date"]) ? $_POST["date"] : "none") ?>">
           <button type="submit" name="search-button" value="1">Search</button>
+          <?php if (isset($_POST["search-button"])) : ?>
+            <button type="submit" name="clear-button">Clear</button>
+          <?php endif; ?>
         </form>
       </div>
       <?php while ($post_row = pg_fetch_row($posts)) : ?>

@@ -3,7 +3,7 @@
 // Author: Charith Akalanka
 // Description: Highlight search terms on text
 function highlight_text($keyword, $text) {
-  $text = preg_replace("/{$keyword}/i","<span class=\"highlight\">{$keyword}</span>",$text);
+  $text = preg_replace("/({$keyword})/i","<span class=\"highlight\">$1</span>",$text);
   return $text;
 }
 

@@ -81,12 +81,14 @@ if (isset($_POST["search-button"])) {
     // $errors[] = "Invalid search date provided";
   }
 
-  if (isset($_POST["searchTerm"]) && !preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTerm"])) {
-    $stmt .= " and ( to_tsvector(p.\"content\") @@ to_tsquery('{$_POST["searchTerm"]}')
-               or to_tsvector(p.\"title\") @@ to_tsquery('{$_POST["searchTerm"]}') )";
-  } else {
-    unset($_POST["searchTerm"]);
-    $errors[] = "Invalid characters found in search term";
+  if (isset($_POST["searchTerm"]) && strlen($_POST["searchTerm"])>0) {
+    if( !preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTerm"])) {
+      $stmt .= " and ( to_tsvector(p.\"content\") @@ to_tsquery('{$_POST["searchTerm"]}')
+                 or to_tsvector(p.\"title\") @@ to_tsquery('{$_POST["searchTerm"]}') )";
+    } else {
+      unset($_POST["searchTerm"]);
+      $errors[] = "Invalid characters found in search term";
+    }
   }
 }
 

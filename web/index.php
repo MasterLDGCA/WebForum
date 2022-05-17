@@ -41,6 +41,8 @@ if (!empty($_POST["post_report"])) {
   flag_post($db_connection, $_POST["post_report"]);
 }
 
+$errors = [];
+
 // Retrieve posts
 $stmt = ' select p.title , p.content , u.first_name , u.last_name, p.created_at , p.id , likes
           from "Posts" p
@@ -60,6 +62,7 @@ if (isset($_POST["search-button"])) {
   } else {
     // Invalid subject code
     unset($_POST["subject"]);
+    // $errors[] = "Invalid subject selected";
   }
 
   if (isset($_POST["date"]) && preg_match("/^\d{4}-\d{2}-\d{2}$/",$_POST["date"])) {
@@ -68,6 +71,15 @@ if (isset($_POST["search-button"])) {
   } else {
     // invalid date
     unset($_POST["date"]);
+    // $errors[] = "Invalid search date provided";
+  }
+
+  if (isset($_POST["searchTerm"]) && !preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTerm"])) {
+    $stmt .= " and ( to_tsvector(p.\"content\") @@ to_tsquery('{$_POST["searchTerm"]}')
+               or to_tsvector(p.\"title\") @@ to_tsquery('{$_POST["searchTerm"]}') )";
+  } else {
+    unset($_POST["searchTerm"]);
+    $errors[] = "Invalid characters found in search term";
   }
 }
 
@@ -75,16 +87,21 @@ $stmt_end = ' order by p.created_at desc';
 
 $posts = pg_query($db_connection, $stmt.$stmt_end);
 
- //print_r($_POST);
-
+print_r($_POST);
 ?>
-
 <div class="content">
   <div class="view">
     <div class="post_box">
+      <?php if ($errors) : ?>
+        <div class="error_msg">
+          <?php foreach($errors as $error) : ?>
+            <div class="error"><?php echo "* ".$error ?></div>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
       <div class="search_box">
         <form class="" action="index.php" method="post">
-          <input type="text" name="searchTerm" placeholder="Enter a search phrase" value="">
+          <input type="text" name="searchTerm" placeholder="Enter a search phrase" value="<?php echo isset($_POST["searchTerm"]) ? $_POST["searchTerm"] : "" ?>">
           <select class="" name="subject">
             <option value="all">All</option>
             <?php
@@ -102,7 +119,7 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
       <?php while ($post_row = pg_fetch_row($posts)) : ?>
           <div class="post_node">
           <div class="post_title_node">
-          <img class="post_img" src="images/die.png" alt=""><div class="post_title"><?php echo $post_row[0]; ?></div>
+          <img class="post_img" src="images/die.png" alt=""><div class="post_title"><?php echo (isset($_POST["searchTerm"])) ? highlight_text($_POST["searchTerm"],$post_row[0]) : $post_row[0]; ?></div>
           <div class="post_tags">
           <?php
             // Retrieve tags
@@ -119,34 +136,35 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
           <?php endwhile; ?>
           </div>
           </div>
-          <div class="post_content"><?php echo $post_row[1]; ?>
-          <div class="forum_button">
-            <?php
-              // Has the user liked this post?
-              $post_liked = false;
-              if ($loggedIn) {
-                $stmt ='select *
-                        from "PostLikes" pl
-                        where pl.user_id ='.$_SESSION['user_id'].' and pl.post_id ='.$post_row[5];
+          <div class="post_content">
+            <div class="post_content_text"><?php echo (isset($_POST["searchTerm"])) ? highlight_text($_POST["searchTerm"],$post_row[1]) : $post_row[1]; ?></div>
+            <div class="forum_button">
+              <?php
+                // Has the user liked this post?
+                $post_liked = false;
+                if ($loggedIn) {
+                  $stmt ='select *
+                          from "PostLikes" pl
+                          where pl.user_id ='.$_SESSION['user_id'].' and pl.post_id ='.$post_row[5];
 
-                $check_liked = pg_query($db_connection, $stmt);
-                $post_liked = pg_num_rows($check_liked);
-              }
-            ?>
-            <form method="POST" action="index.php">
-              <input type="hidden" name="post_like" value="<?php echo $post_row[5];?>">
-              <button type="submit" class="like_button<?php echo ($post_liked) ? " clicked" : ""; ?>" ><span class="glyphicon glyphicon-thumbs-up"></span> <?php echo ($post_row[6]) ? $post_row[6] : " Like";?></button>
-            </form>
+                  $check_liked = pg_query($db_connection, $stmt);
+                  $post_liked = pg_num_rows($check_liked);
+                }
+              ?>
+              <form method="POST" action="index.php">
+                <input type="hidden" name="post_like" value="<?php echo $post_row[5];?>">
+                <button type="submit" class="like_button<?php echo ($post_liked) ? " clicked" : ""; ?>" ><span class="glyphicon glyphicon-thumbs-up"></span> <?php echo ($post_row[6]) ? $post_row[6] : " Like";?></button>
+              </form>
 
-            <!-- Hamish Sandys-Renton - Report Button with PHP 02/05/2022
-            Date Created: 01/05/2022
-            -->
-            <form method="POST" action="index.php">
-              <input type="hidden" name="post_report" value="<?php echo $post_row[5];?>">
-              <button type="submit" class="like_button" id="flag_button"><span class="glyphicon glyphicon-flag"></span></button>
-            </form>
+              <!-- Hamish Sandys-Renton - Report Button with PHP 02/05/2022
+              Date Created: 01/05/2022
+              -->
+              <form method="POST" action="index.php">
+                <input type="hidden" name="post_report" value="<?php echo $post_row[5];?>">
+                <button type="submit" class="like_button" id="flag_button"><span class="glyphicon glyphicon-flag"></span></button>
+              </form>
 
-          </div>
+            </div>
           </div>
           <div class="post_footer">
             <div class="post_author"><?php echo $post_row[2]." ".$post_row[3]; ?></div>

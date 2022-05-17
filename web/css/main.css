@@ -191,6 +191,10 @@ body{
   margin: 10px;
 }
 
+.highlight {
+  background: #ffc000;
+}
+
 .post_footer {
   display: flex;
   /* justify-content: space-between; */

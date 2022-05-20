@@ -1,6 +1,7 @@
 <?php
 require 'inc/postgresql.inc.php';
 require 'inc/functions.inc.php';
+require 'inc/session.inc.php';
 
 // echo("<script>console.log('_POST: " . json_encode($_POST) . "');</script>");
 

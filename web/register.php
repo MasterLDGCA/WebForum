@@ -9,6 +9,8 @@ define( 'PAGE_TITLE', 'Register');
 require 'inc/header.inc.php';
 require 'inc/functions.inc.php';
 
+//<script src ="functions.inc.js"></script>
+
 if ($loggedIn) {
   header( 'location: /profile.php' );
   exit();
@@ -33,7 +35,7 @@ if (!empty($_POST["fname"]) && !empty($_POST["lname"]) && !empty($_POST["email"]
       }
     ?>
     <h1>Register for a new account</h1>
-    <form method="POST" action="register.php">
+    <form id="register" method="POST" action="register.php">
       <div class="form-group">
           <input type="text" class="form-control" name="fname" required placeholder="Your First Name" value="<?php echo (isset($_POST['fname'])) ? $_POST['fname'] : "" ?>">
       </div>

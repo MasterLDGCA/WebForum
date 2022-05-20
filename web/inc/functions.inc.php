@@ -1,6 +1,13 @@
 <?php
 
 // Author: Charith Akalanka
+// Description: Highlight search terms on text
+function highlight_text($keyword, $text) {
+  $text = preg_replace("/({$keyword})/i","<span class=\"highlight\">$1</span>",$text);
+  return $text;
+}
+
+// Author: Charith Akalanka
 // Description: Create new user account from the register page
 function insert_user($db_connection, $fname, $lname, $email, $password) {
   // prepare statement for insert
@@ -59,7 +66,7 @@ function update_user($db_connection, $fname, $lname, $password, $user_id){
 
 // Author: Jordan Junior
 // Description: Validate user information being updated
-// Date created: 10/05/2022
+// Date created: 10/05/2022 changed
 function update_user_validation($fname, $lname, $password){
   if (!empty($fname) && preg_match("/[^a-zA-Z]/", $fname))          $errors[] = "First name can only contain letters";
   if (!empty($lname) && preg_match("/[^a-zA-Z]/", $lname))          $errors[] = "Last name can only contain letters";
@@ -202,12 +209,9 @@ function create_post($db_connection, $title, $content, $user_id, $subject_id) {
 //Author: Ully Martins
 //Description: Function for create comment
 //Date created: 29/04/2022
-//Date modified:
-
-  //add subjects
 function create_comment($db_connection, $post_id, $comment, $user_id) {
   //create a comment
-  $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';  
+  $stmt = 'insert into "Comments" (user_id, post_id, comment) values (\''.$user_id.'\',\''.$post_id.'\',\''.$comment.'\')';
   $create_comment = pg_query($db_connection, $stmt);
   if (!$create_comment) echo "<div class=\"error_msg\">Failed to comment</div>";
 

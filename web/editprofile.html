@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Edit your profile</title>
+	<meta charset="utf-8"/>
+	<meta name="description" content="edit profile" />
+	<meta name="keywords"    content="html, javascript, css" />
+	<meta name="author"      content="Vats" />
+	</head>
+	
+<body>
+<form action = "/profile.php" method = "post">
+  <label for="myfile">Select a file:</label><br>
+  <input type="file" id="myfile" name="myfile"><br>
+    <p> The File should be .jpg or .jpeg </p><br>
+	<label for="username">Firstname:</label><br>
+	<input type="text" id="username" name="username" required><br>
+	<label for="username">Lastname:</label><br>
+	<input type="text" id="Lastname" name="lastSname" required><br>
+	<label for="email">Email Address:</label><br>
+	<input type="email" id="email" name="email" required><br><br>
+	<input type="submit" value="Edit Profile">
+	<input type="reset">
+ </form>
+ </body>
+ </html>

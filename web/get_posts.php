@@ -1,8 +1,10 @@
 <?php
 require 'inc/postgresql.inc.php';
 require 'inc/functions.inc.php';
+require 'inc/session.inc.php';
 
-echo("<script>console.log('_POST: " . json_encode($_POST) . "');</script>");
+// echo("<script>console.log('_POST: " . json_encode($_POST) . "');</script>");
+echo("<script>console.log('_SESSION: " . json_encode($_SESSION) . "');</script>");
 
 $offset = 0;
 $limit = 5;

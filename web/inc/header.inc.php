@@ -14,6 +14,7 @@ require 'inc/session.inc.php';
   		<script src="js/bootstrap.js"></script>
   		<script src="js/p5.js"></script>
       <script src="js/sketch.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
     <div class="header">

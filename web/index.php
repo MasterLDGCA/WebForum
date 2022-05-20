@@ -13,7 +13,7 @@ $errors = [];
 //Date created: 29/04/2022
 //Date modified:
 if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
-  create_post($db_connection, $_POST["title"], $_POST["content"], $userID);
+  create_post($db_connection, $_POST["title"], $_POST["content"], $userID, $_POST["subjects"]);
 }
 
 if (!empty($_POST["post_like"])) {
@@ -55,6 +55,7 @@ if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTe
   $errors[] = "Invalid characters found in search term";
 }
 
+// print_r($_POST);
 ?>
 <div class="content">
   <div class="view">
@@ -89,9 +90,7 @@ if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTe
       <div id="post_view" class="post_view"></div>
       <input type="hidden" id="offset" value="0">
       <div id="loader" class="loader"></div>
-    </div>
-
-    <script type="text/javascript">
+      <script type="text/javascript">
       var inProgress = true;
       var limit = 5;
 
@@ -144,8 +143,8 @@ if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTe
           }
         }
       })
-
     </script>
+    </div>
     <div class="leader_box">
       <div class="leaderboard_top">
         <p id="cancan"></p>
@@ -156,8 +155,8 @@ if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTe
         <table>
           <tr>
             <th>User</th>
-            <th>Post Likes</th>
-            <th>Comment Likes</th>
+            <!-- <th>Post Likes</th> -->
+            <!-- <th>Comment Likes</th> -->
             <th>Score</th>
           </tr>
           <?php
@@ -174,7 +173,8 @@ if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTe
                       		group by author) as comment_likes
                       on post_likes.author = comment_likes.author
                       left join "Users" u2 on u2.id = post_likes.author
-                      order by score desc';
+                      order by score desc
+                      limit 5';
 
             $alltime_leaders = pg_query($db_connection, $stmt);
             $alltime_leader = pg_fetch_result($alltime_leaders, 0, 0);
@@ -187,8 +187,8 @@ if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTe
             <?php if ($alltime_leader_row[4]<1) continue; ?>
             <tr>
               <td id="leaderb"><?php echo $alltime_leader_row[0] ?></td>
-              <td><?php echo $alltime_leader_row[2] ?></td>
-              <td><?php echo $alltime_leader_row[3] ?></td>
+              <!-- <td><?php echo $alltime_leader_row[2] ?></td> -->
+              <!-- <td><?php echo $alltime_leader_row[3] ?></td> -->
               <td><?php echo $alltime_leader_row[4] ?></td>
             </tr>
           <?php endwhile; ?>
@@ -202,8 +202,8 @@ if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTe
         <table>
           <tr>
             <th>User</th>
-            <th>Post Likes</th>
-            <th>Comment Likes</th>
+            <!-- <th>Post Likes</th> -->
+            <!-- <th>Comment Likes</th> -->
             <th>Score</th>
           </tr>
           <?php
@@ -220,7 +220,8 @@ if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTe
                       		group by author) as comment_likes
                       on post_likes.author = comment_likes.author
                       left join "Users" u2 on u2.id = post_likes.author
-                      order by score desc';
+                      order by score desc
+                      limit 10';
 
             $alltime_leaders = pg_query($db_connection, $stmt);
           ?>
@@ -228,8 +229,8 @@ if (isset($_POST["searchTerm"]) && preg_match("/[^a-zA-Z0-9 ]/",$_POST["searchTe
             <?php if ($alltime_leader_row[4]<1) continue; ?>
             <tr>
               <td><?php echo $alltime_leader_row[0] ?></td>
-              <td><?php echo $alltime_leader_row[2] ?></td>
-              <td><?php echo $alltime_leader_row[3] ?></td>
+              <!-- <td><?php echo $alltime_leader_row[2] ?></td> -->
+              <!-- <td><?php echo $alltime_leader_row[3] ?></td> -->
               <td><?php echo $alltime_leader_row[4] ?></td>
             </tr>
           <?php endwhile; ?>

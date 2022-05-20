@@ -11,7 +11,7 @@ require 'inc/functions.inc.php';
 //Date created: 29/04/2022
 //Date modified:
 if (!empty($_POST["title"]) && !empty($_POST["content"]) && !$errors) {
-  create_post($db_connection, $_POST["title"], $_POST["content"], $userID);
+  create_post($db_connection, $_POST["title"], $_POST["content"], $userID, $_POST["subjects"]);
 }
 
 if (!empty($_POST["post_like"])) {

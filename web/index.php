@@ -245,8 +245,8 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
         <table>
           <tr>
             <th>User</th>
-            <th>Post Likes</th>
-            <th>Comment Likes</th>
+            <!-- <th>Post Likes</th> -->
+            <!-- <th>Comment Likes</th> -->
             <th>Score</th>
           </tr>
           <?php
@@ -277,8 +277,8 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             <?php if ($alltime_leader_row[4]<1) continue; ?>
             <tr>
               <td id="leaderb"><?php echo $alltime_leader_row[0] ?></td>
-              <td><?php echo $alltime_leader_row[2] ?></td>
-              <td><?php echo $alltime_leader_row[3] ?></td>
+              <!-- <td><?php echo $alltime_leader_row[2] ?></td> -->
+              <!-- <td><?php echo $alltime_leader_row[3] ?></td> -->
               <td><?php echo $alltime_leader_row[4] ?></td>
             </tr>
           <?php endwhile; ?>
@@ -292,8 +292,8 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
         <table>
           <tr>
             <th>User</th>
-            <th>Post Likes</th>
-            <th>Comment Likes</th>
+            <!-- <th>Post Likes</th> -->
+            <!-- <th>Comment Likes</th> -->
             <th>Score</th>
           </tr>
           <?php
@@ -319,8 +319,8 @@ $posts = pg_query($db_connection, $stmt.$stmt_end);
             <?php if ($alltime_leader_row[4]<1) continue; ?>
             <tr>
               <td><?php echo $alltime_leader_row[0] ?></td>
-              <td><?php echo $alltime_leader_row[2] ?></td>
-              <td><?php echo $alltime_leader_row[3] ?></td>
+              <!-- <td><?php echo $alltime_leader_row[2] ?></td> -->
+              <!-- <td><?php echo $alltime_leader_row[3] ?></td> -->
               <td><?php echo $alltime_leader_row[4] ?></td>
             </tr>
           <?php endwhile; ?>
